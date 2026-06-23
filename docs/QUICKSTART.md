@@ -134,6 +134,14 @@ npm run test:e2e           # Playwright — browser flows (production build on :
 npm test                   # Unit + integration (pre-commit hook)
 npm run test:all           # Everything — run before merging to main
 npm run test:coverage      # Unit coverage report
+npm run test:ollama        # Live Ollama inference (local only — not CI/deploy)
+```
+
+**Ollama live test** (optional, requires `ollama serve` + `qwen3:14b`):
+
+```bash
+npm run ollama:check
+npm run test:ollama        # ~30–90s; skipped when CI=true or OLLAMA_INTEGRATION≠1
 ```
 
 First-time E2E setup:
