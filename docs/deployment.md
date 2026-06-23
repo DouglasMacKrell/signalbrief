@@ -49,6 +49,8 @@ Render auto-deploys from `main`.
 
 ## Health checks
 
+Live demo: [https://signalbrief-web.onrender.com](https://signalbrief-web.onrender.com)
+
 After deploy, verify:
 
 - [ ] Account selector loads

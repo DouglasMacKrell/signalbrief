@@ -8,8 +8,9 @@ SignalBrief is an internal GTM application prototype that unifies account contex
 
 ## Live demo
 
-<!-- Update after Render deploy -->
-**Demo URL:** _Coming soon — deploy via [Render](docs/deployment.md)_
+**Demo URL:** [https://signalbrief-web.onrender.com](https://signalbrief-web.onrender.com)
+
+Runs **rules-fallback** briefings on Render (no Ollama). Free tier may cold-start after ~15 min idle — open the link before a screen share.
 
 ## What it demonstrates
 
