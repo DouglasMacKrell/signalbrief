@@ -2,6 +2,8 @@
 
 A product-focused walkthrough for screen sharing. Fictional companies and data only.
 
+**Live demo:** [https://signalbrief-web.onrender.com](https://signalbrief-web.onrender.com) (rules-fallback briefings; open before the call — free tier cold starts).
+
 ## Problem (30 seconds)
 
 Revenue teams prep for customer calls by jumping between CRM, call recordings, support tickets, and product usage dashboards. Context is scattered; renewal risk is easy to miss.
@@ -22,14 +24,14 @@ Revenue teams prep for customer calls by jumping between CRM, call recordings, s
 - Recent calls: payroll automation, contractor onboarding
 - No open support tickets · usage **up**
 
-**Show:** Low risk count, Ollama or rules briefing with positive next steps.
+**Show:** Low risk count → **Generate Briefing** → **Positive signals** section → helpful feedback.
 
 ### Northstar Logistics — high-risk renewal
 
 - **Renewal** stalled 38 days · high-priority ticket open 12+ days
 - Negative call themes · usage **down**, health score 41
 
-**Show:** Risk cards with evidence chips, executive outreach in briefing.
+**Show:** Risk cards with evidence chips → briefing with executive outreach → **Draft follow-up task** (logs intent, no CRM write-back).
 
 ### Brightline Health Clinic — moderate renewal
 
@@ -63,10 +65,12 @@ Revenue teams prep for customer calls by jumping between CRM, call recordings, s
 | Support | Open ticket priority and age |
 | Product health | Score, usage trend, active users |
 | Risk signals | Deterministic rules—not LLM guesses |
-| AI briefing | Structured JSON, evidence citations, provider label (`ollama` locally) |
-| Feedback | Helpful / not helpful captured for iteration |
+| AI briefing | Structured JSON, evidence citations, provider label |
+| Positive signals | Rules/Ollama surface strengths with evidence |
+| Feedback | Helpful / not helpful + optional comment |
+| Draft follow-up | Human-in-the-loop; telemetry only, no write-back |
 
-## Local Ollama demo tip
+## Local Ollama demo tip (optional)
 
 Enable in `.env`:
 
@@ -76,25 +80,28 @@ OLLAMA_ENABLED=true
 OLLAMA_MODEL=qwen3:14b
 ```
 
-Mention: risks are computed in code first; the LLM summarizes curated context with schema validation—not free-form guessing.
+Mention: risks are computed in code first; the LLM summarizes curated context with schema validation—not free-form guessing. **Render demo uses rules-fallback only.**
 
 ## Trust boundaries (1–2 minutes)
 
 - Risks are computed in code before any briefing is generated
 - Briefing output is schema-validated; bad output is rejected
 - `briefing_runs` table provides an audit trail
+- Structured telemetry logs key events in server output
 - UI states: _SignalBrief does not write back to source systems without explicit user confirmation_
 
 ## Suggested flow (~10 minutes)
 
 1. Problem framing
-2. Architecture ([QUICKSTART.md](./QUICKSTART.md) or [architecture.md](./architecture.md))
-3. Acme Creative — healthy path + generate briefing
-4. Northstar Logistics — at-risk path
-5. Optional: Brightline for moderate risk
-6. Trust boundaries and production roadmap
-7. Q&A
+2. Open **live demo** → account selector (five accounts)
+3. **Acme Creative** — healthy path + generate briefing + positive signals
+4. **Northstar Logistics** — at-risk path + evidence on risk cards
+5. Optional: **Brightline** for moderate risk
+6. Trust boundaries and production roadmap ([architecture.md](./architecture.md))
+7. Q&A — mention read-only MCP only if asked about agents/automation ([mcp.md](./mcp.md))
 
-## After deploy
+## If asked about agents / GTM engineering
 
-Replace the placeholder demo URL in the root README with your Render app URL.
+> “The dashboard is the seller-facing surface. The same domain services power read-only MCP tools for internal workflows—prep bots, workflow steps—without giving agents CRM write access.”
+
+Do not demo Cursor MCP configuration in the interview unless the room is deeply technical and asks for it.

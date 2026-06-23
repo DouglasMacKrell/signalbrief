@@ -52,8 +52,10 @@ For local Ollama briefings, set `OLLAMA_ENABLED=true` and `BRIEFING_PROVIDER=oll
 
 | Command | Purpose |
 |---|---|
-| `npm run dev` | Start development server |
-| `npm test` | Run Vitest suite |
+| `npm run dev` | Start development server (port 3001) |
+| `npm test` | Unit + integration tests |
+| `npm run test:all` | Unit + integration + E2E |
+| `npm run mcp` | Local read-only MCP server (GTM workflow composability) |
 | `npm run security:scan` | Scan staged files for secrets / PII |
 | `npm run security:scan:all` | Scan all tracked files |
 | `npm run lint` | ESLint |
@@ -105,7 +107,7 @@ Details: [docs/security.md](docs/security.md)
 ## Production roadmap
 
 1. Idempotent ELT connectors → Snowflake canonical models
-2. MCP read layer for agent-composable GTM data — [docs/mcp.md](docs/mcp.md) (stdio, local)
+2. Read-only MCP tools for internal GTM workflows — [docs/mcp.md](docs/mcp.md) (optional; not the screen-share demo)
 3. Optional hosted LLM inference behind authenticated proxy
 
 ## Documentation

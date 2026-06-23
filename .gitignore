@@ -83,6 +83,7 @@ Thumbs.db
 !.cursor/hooks/
 !.cursor/hooks/**
 !.cursor/hooks.json
+.cursor/mcp.json
 .cursor/plans/
 .cursor/plans/**
 
