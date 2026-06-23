@@ -7,6 +7,11 @@ export default defineConfig({
     environment: "node",
     include: ["tests/**/*.test.ts"],
     passWithNoTests: true,
+    coverage: {
+      provider: "v8",
+      include: ["src/domain/**", "src/providers/**", "src/seed/**"],
+      reporter: ["text", "text-summary"],
+    },
   },
   resolve: {
     alias: {
