@@ -6,21 +6,36 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "security:scan": "node scripts/scan-staged-secrets.mjs",
+    "security:scan:all": "node scripts/scan-staged-secrets.mjs --all",
+    "prepare": "husky"
   },
   "dependencies": {
+    "date-fns": "^4.4.0",
+    "drizzle-orm": "^0.45.2",
     "next": "16.2.9",
+    "postgres": "^3.4.9",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@vitejs/plugin-react": "^6.0.3",
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.10",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
+    "husky": "^9.1.7",
     "tailwindcss": "^4",
-    "typescript": "^5"
+    "tsx": "^4.22.4",
+    "typescript": "^5",
+    "vitest": "^4.1.9"
   }
 }

@@ -1,6 +1,4 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# Dependencies
 /node_modules
 /.pnp
 .pnp.*
@@ -10,32 +8,98 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
+# Testing
 /coverage
 
-# next.js
+# Next.js
 /.next/
 /out/
 
-# production
+# Production
 /build
 
-# misc
-.DS_Store
-*.pem
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
 
-# debug
+# Environment & secrets (never commit real values)
+.env
+.env.*
+!.env.example
+
+# Credentials, keys, and local auth material
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+**/secrets/
+**/*.secret
+**/*.secrets
+
+# Tunnel / remote access tokens (Ollama proxy, ngrok, Cloudflare, Tailscale, etc.)
+.ngrok*
+.cloudflared/
+tailscale*.json
+
+# Local database dumps (keep drizzle/*.sql migrations committed)
+*.dump
+/backups/
+postgres-data/
+docker-data/
+
+# Drizzle local dev artifacts (keep /drizzle migrations committed)
+.drizzle/
+
+# Logs & debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
+*.log
 
-# env files (can opt-in for committing if needed)
-.env*
+# OS
+.DS_Store
+Thumbs.db
 
-# vercel
+# Editor / IDE (local preferences only)
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+*.swp
+*.swo
+*~
+
+# Cursor — commit shared rules & hooks; ignore local plans and session state
+.cursor/*
+!.cursor/rules/
+!.cursor/rules/**
+!.cursor/hooks/
+!.cursor/hooks/**
+!.cursor/hooks.json
+.cursor/plans/
+.cursor/plans/**
+
+# Legacy local Cursor rules file at repo root (use .cursor/rules/ instead)
+.cursorrules
+.cursorignore
+
+# Local planning docs (interview strategy — do not publish)
+SIGNALBRIEF_PLAN.md
+
+# Local plan copies (Cursor plan files outside committed docs)
+*.plan.md
+
+# Agent / AI session artifacts (local working notes, not product docs)
+.agent/
+.claude/
+!.claude/settings.json.example
+
+# Deployment platform local config
 .vercel
+.netlify
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# Misc
+*.local

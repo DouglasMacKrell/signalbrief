@@ -1,0 +1,28 @@
+---
+description: Test-driven development for domain logic and API behavior
+alwaysApply: true
+---
+
+# TDD workflow
+
+## Default order
+
+1. Write or update a failing test in `tests/` that describes the behavior
+2. Implement the smallest change to make it pass
+3. Refactor without changing behavior
+4. Run `npm test` before every commit
+
+## What gets tests first
+
+- Domain logic: `src/domain/*` (risk engine, briefing validation, evidence checks)
+- Pure functions and Zod schemas before UI wiring
+- API route behavior via service-layer tests when possible
+
+## What can skip upfront tests
+
+- One-off layout/CSS tweaks
+- README and copy changes (unless they embed dynamic examples)
+
+## Pre-commit gate
+
+Husky runs `npm test` on every commit. Do not commit broken tests. Fix or revert before staging.

@@ -1,0 +1,5 @@
+echo "🔒 Running secret / PII scan on staged files..."
+npm run security:scan
+
+echo "🧪 Running tests..."
+npm test

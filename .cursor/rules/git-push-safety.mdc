@@ -1,0 +1,36 @@
+---
+description: Frequent commits, cautious pushes, user check-in before remote exposure
+alwaysApply: true
+---
+
+# Git and push safety
+
+## Commit often
+
+- Make small, focused commits as each logical unit completes
+- Prefer messages that explain *why*: `add risk engine for stalled renewals`, not `wip`
+- Push regularly so rollback is easy — but never push unchecked sensitive content
+
+## Before every push — ask the user
+
+Stop and confirm with the user when any of these are true:
+
+- First push of the session or repo
+- Commit touches `.env*`, credentials, seed data with personal info, or deployment config
+- Commit adds docs that may include local paths, tokens, or interview notes
+- Pre-commit / security scan was skipped or failed
+- You are unsure whether staged content is safe for a **private** or **public** GitHub repo
+
+Use plain language: summarize what will be pushed and any exposure risk.
+
+## Never do without explicit user approval
+
+- `git push --force` to `main`
+- Making the repo public
+- Committing `.env`, real connection strings, or API keys
+- Using `--no-verify` to skip secret/PII hooks
+
+## Remote
+
+- Default remote: `origin` → GitHub `signalbrief` (private)
+- Treat every push as potentially visible to future collaborators or if visibility changes
