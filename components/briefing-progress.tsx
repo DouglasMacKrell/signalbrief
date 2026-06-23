@@ -9,11 +9,9 @@ import {
 
 export function BriefingProgressBar({
   active,
-  llmBriefing,
   complete,
 }: {
   active: boolean;
-  llmBriefing: boolean;
   complete: boolean;
 }) {
   const [elapsedSec, setElapsedSec] = useState(0);
@@ -26,21 +24,20 @@ export function BriefingProgressBar({
       return;
     }
 
-    const expectedMs = llmBriefing
-      ? GENERATION_EXPECTED_MS.llm
-      : GENERATION_EXPECTED_MS.rules;
     const started = Date.now();
 
     const tick = () => {
       const elapsedMs = Date.now() - started;
       setElapsedSec(Math.floor(elapsedMs / 1000));
-      setProgress(estimateGenerationProgress(elapsedMs, expectedMs));
+      setProgress(
+        estimateGenerationProgress(elapsedMs, GENERATION_EXPECTED_MS.llm),
+      );
     };
 
     tick();
     const id = window.setInterval(tick, 200);
     return () => window.clearInterval(id);
-  }, [active, llmBriefing]);
+  }, [active]);
 
   useEffect(() => {
     if (complete) setProgress(100);
@@ -51,11 +48,7 @@ export function BriefingProgressBar({
   return (
     <div className="mb-4" role="status" aria-live="polite" aria-busy="true">
       <div className="mb-1.5 flex items-center justify-between gap-3 text-xs text-slate-500">
-        <span>
-          {llmBriefing
-            ? "Running local model inference…"
-            : "Building structured briefing…"}
-        </span>
+        <span>Running local model inference…</span>
         <span className="tabular-nums">{elapsedSec}s</span>
       </div>
       <div
@@ -67,7 +60,7 @@ export function BriefingProgressBar({
           style={{ width: `${progress}%` }}
         />
       </div>
-      {llmBriefing && elapsedSec >= 15 && progress < 100 && (
+      {elapsedSec >= 15 && progress < 100 && (
         <p className="mt-2 text-xs text-slate-500">
           Large local models can take 30–90 seconds on first run.
         </p>

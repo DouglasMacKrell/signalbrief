@@ -44,8 +44,10 @@ export function BriefingPanel({
       setBriefing(data.briefing);
       setProvider(data.provider);
       setBriefingRunId(data.briefingRunId);
-      setProgressComplete(true);
-      await new Promise((resolve) => setTimeout(resolve, 350));
+      if (llmBriefing) {
+        setProgressComplete(true);
+        await new Promise((resolve) => setTimeout(resolve, 350));
+      }
     } catch {
       setError("Network error while generating briefing");
     } finally {
@@ -76,11 +78,12 @@ export function BriefingPanel({
         </div>
       </div>
 
-      <BriefingProgressBar
-        active={loading}
-        llmBriefing={llmBriefing}
-        complete={progressComplete}
-      />
+      {llmBriefing && (
+        <BriefingProgressBar
+          active={loading}
+          complete={progressComplete}
+        />
+      )}
 
       {error && (
         <p className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
