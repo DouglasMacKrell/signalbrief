@@ -4,7 +4,13 @@ import { useState } from "react";
 
 import type { Briefing } from "@/src/domain/briefing-schema";
 
-export function BriefingPanel({ accountId }: { accountId: string }) {
+export function BriefingPanel({
+  accountId,
+  configuredProvider,
+}: {
+  accountId: string;
+  configuredProvider: string;
+}) {
   const [briefing, setBriefing] = useState<Briefing | null>(null);
   const [provider, setProvider] = useState<string | null>(null);
   const [briefingRunId, setBriefingRunId] = useState<string | null>(null);
@@ -43,9 +49,10 @@ export function BriefingPanel({ accountId }: { accountId: string }) {
           AI Briefing
         </h2>
         <div className="flex items-center gap-3">
-          {provider && (
-            <span className="text-xs text-slate-500">Provider: {provider}</span>
-          )}
+          <span className="text-xs text-slate-500">
+            Configured: {configuredProvider}
+            {provider && provider !== configuredProvider ? ` · used: ${provider}` : ""}
+          </span>
           <button
             type="button"
             onClick={generate}

@@ -28,7 +28,7 @@ export default async function HomePage() {
           account to view unified CRM, call, support, and product health data.
         </p>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {accounts.map((account) => (
             <Link
               key={account.id}

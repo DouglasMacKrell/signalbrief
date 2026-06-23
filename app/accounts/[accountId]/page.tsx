@@ -5,6 +5,7 @@ import { BriefingPanel } from "@/components/briefing-panel";
 import { AccountSelector } from "@/components/account-selector";
 import { formatRelative, Panel, RiskCard } from "@/components/dashboard-ui";
 import { getAccountContext, getAccounts } from "@/src/domain/account-context";
+import { getBriefingProviderLabel } from "@/src/domain/briefing-provider";
 import { calculateRiskSignals } from "@/src/domain/risk-engine";
 
 export const dynamic = "force-dynamic";
@@ -24,6 +25,7 @@ export default async function AccountDashboardPage({
 
   const risks = calculateRiskSignals(context);
   const { account, opportunity, calls, tickets, health, freshness } = context;
+  const configuredProvider = getBriefingProviderLabel();
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
@@ -187,7 +189,10 @@ export default async function AccountDashboardPage({
         </div>
 
         <div className="lg:col-span-2">
-          <BriefingPanel accountId={accountId} />
+          <BriefingPanel
+            accountId={accountId}
+            configuredProvider={configuredProvider}
+          />
         </div>
       </main>
     </div>
