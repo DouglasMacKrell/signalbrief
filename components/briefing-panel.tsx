@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import { BriefingProgressBar } from "@/components/briefing-progress";
-import { EvidenceChipList } from "@/components/dashboard-ui";
+import { EvidenceChipList } from "@/components/evidence-chip-list";
 import type { Briefing } from "@/src/domain/briefing-schema";
 import type { EvidenceRef } from "@/src/domain/types";
 

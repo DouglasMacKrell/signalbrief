@@ -9,6 +9,8 @@ test.describe("Briefing flow", () => {
       timeout: 15_000,
     });
     await expect(page.getByText("Positive signals")).toBeVisible();
+    await expect(page.getByText("gong:call_acme_001")).not.toBeVisible();
+    await page.getByRole("button", { name: "Show evidence" }).click();
     await expect(page.getByText("gong:call_acme_001")).toBeVisible();
     await expect(page.getByText("Next best action")).toBeVisible();
     await expect(page.getByRole("button", { name: "Helpful", exact: true })).toBeVisible();

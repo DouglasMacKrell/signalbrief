@@ -3,7 +3,12 @@ import { notFound } from "next/navigation";
 
 import { BriefingPanel } from "@/components/briefing-panel";
 import { AccountSelector } from "@/components/account-selector";
-import { formatRelative, Panel, RiskCard } from "@/components/dashboard-ui";
+import { formatRelative, Panel } from "@/components/dashboard-ui";
+import {
+  EvidenceToggle,
+  EvidenceVisibilityProvider,
+} from "@/components/evidence-visibility";
+import { RiskCard } from "@/components/risk-card";
 import { getAccountContext, getAccounts } from "@/src/domain/account-context";
 import { getBriefingProviderLabel, isLlmBriefingConfigured } from "@/src/domain/briefing-provider";
 import { buildEvidenceIndex } from "@/src/domain/evidence";
@@ -34,6 +39,7 @@ export default async function AccountDashboardPage({
   const llmBriefing = isLlmBriefingConfigured();
 
   return (
+    <EvidenceVisibilityProvider>
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
       <header className="border-b border-slate-200 bg-white dark:border-slate-800 dark:bg-slate-950">
         <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-6 py-5">
@@ -43,7 +49,10 @@ export default async function AccountDashboardPage({
             </Link>
             <h1 className="text-2xl font-bold">{account.name}</h1>
           </div>
-          <AccountSelector accounts={allAccounts} currentId={accountId} />
+          <div className="flex flex-wrap items-center gap-3">
+            <EvidenceToggle />
+            <AccountSelector accounts={allAccounts} currentId={accountId} />
+          </div>
         </div>
       </header>
 
@@ -204,5 +213,6 @@ export default async function AccountDashboardPage({
         </div>
       </main>
     </div>
+    </EvidenceVisibilityProvider>
   );
 }
