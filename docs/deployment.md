@@ -25,8 +25,12 @@ Do **not** set `OLLAMA_BASE_URL` in production.
 1. Connect the GitHub repo to Render (private repo is fine)
 2. Apply the Blueprint from `render.yaml` or create services manually
 3. Set env vars; link Postgres to the web service
-4. Release command runs migrations + idempotent seed
+4. On each start, `scripts/render-start.sh` runs migrations + idempotent bootstrap (free tier has no pre-deploy hook)
 5. Update the demo URL in root `README.md`
+
+## Free tier note
+
+Render **free** web services do not support `preDeployCommand`. SignalBrief runs `db:migrate` and `db:bootstrap` in `scripts/render-start.sh` before `npm start`. Bootstrap seeds demo data only when the database is empty — restarts do not wipe feedback or briefing runs.
 
 ## Cold starts
 

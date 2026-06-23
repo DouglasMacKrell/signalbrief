@@ -4,13 +4,14 @@ services:
     runtime: node
     plan: free
     buildCommand: npm ci && npm run build
-    preDeployCommand: npm run db:migrate && npm run db:seed
-    startCommand: npm start
+    startCommand: bash scripts/render-start.sh
     envVars:
       - key: NODE_ENV
         value: production
       - key: BRIEFING_PROVIDER
         value: rules-fallback
+      - key: OLLAMA_ENABLED
+        value: "false"
       - key: DATABASE_URL
         fromDatabase:
           name: signalbrief-db

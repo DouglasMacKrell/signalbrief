@@ -37,3 +37,22 @@ export async function prepareTestDatabase() {
   await ensureMigrated();
   return resetDemoDatabase();
 }
+
+/** Production-safe: migrate always; seed only when the database is empty. */
+export async function bootstrapDatabase() {
+  await ensureMigrated();
+
+  const db = getDb();
+  const existing = await db.select({ id: accounts.id }).from(accounts).limit(1);
+  if (existing.length > 0) {
+    return existing.length;
+  }
+
+  await db.insert(accounts).values(demoAccountsSeed.accounts);
+  await db.insert(opportunities).values(demoAccountsSeed.opportunities);
+  await db.insert(calls).values(demoAccountsSeed.calls);
+  await db.insert(supportTickets).values(demoAccountsSeed.tickets);
+  await db.insert(healthSnapshots).values(demoAccountsSeed.healthSnapshots);
+
+  return DEMO_ACCOUNT_COUNT;
+}
