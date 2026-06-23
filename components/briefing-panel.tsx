@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { BriefingProgressBar } from "@/components/briefing-progress";
 import { EvidenceChipList } from "@/components/dashboard-ui";
 import type { Briefing } from "@/src/domain/briefing-schema";
 import type { EvidenceRef } from "@/src/domain/types";
@@ -21,10 +22,12 @@ export function BriefingPanel({
   const [provider, setProvider] = useState<string | null>(null);
   const [briefingRunId, setBriefingRunId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [progressComplete, setProgressComplete] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   async function generate() {
     setLoading(true);
+    setProgressComplete(false);
     setError(null);
 
     try {
@@ -41,10 +44,13 @@ export function BriefingPanel({
       setBriefing(data.briefing);
       setProvider(data.provider);
       setBriefingRunId(data.briefingRunId);
+      setProgressComplete(true);
+      await new Promise((resolve) => setTimeout(resolve, 350));
     } catch {
       setError("Network error while generating briefing");
     } finally {
       setLoading(false);
+      setProgressComplete(false);
     }
   }
 
@@ -69,6 +75,12 @@ export function BriefingPanel({
           </button>
         </div>
       </div>
+
+      <BriefingProgressBar
+        active={loading}
+        llmBriefing={llmBriefing}
+        complete={progressComplete}
+      />
 
       {error && (
         <p className="mb-4 rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-800">
