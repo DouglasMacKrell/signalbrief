@@ -1,21 +1,30 @@
 ---
-description: Frequent commits, cautious pushes, user check-in before remote exposure
+description: Git workflow — develop branch for daily work, main for stable milestones
 alwaysApply: true
 ---
 
 # Git and push safety
 
+## Branch workflow
+
+- **`main`** — stable milestones only; merge from `develop` when a phase or feature set is complete and tested
+- **`develop`** — default working branch for day-to-day implementation
+- Feature branches off `develop` only if a change is large or risky; otherwise commit directly to `develop`
+
+Before merging to `main`: `npm test`, `npm run security:scan:all`, docs updated if needed.
+
 ## Commit often
 
 - Make small, focused commits as each logical unit completes
 - Prefer messages that explain *why*: `add risk engine for stalled renewals`, not `wip`
-- Push regularly so rollback is easy — but never push unchecked sensitive content
+- Push `develop` regularly so rollback is easy — but never push unchecked sensitive content
 
 ## Before every push — ask the user
 
 Stop and confirm with the user when any of these are true:
 
 - First push of the session or repo
+- Push to `main` (always confirm)
 - Commit touches `.env*`, credentials, seed data with personal info, or deployment config
 - Commit adds docs that may include local paths, tokens, or interview notes
 - Pre-commit / security scan was skipped or failed

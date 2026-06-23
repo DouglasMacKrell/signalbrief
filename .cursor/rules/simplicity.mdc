@@ -1,0 +1,40 @@
+---
+description: Keep the codebase simple, readable, and interview-appropriate
+alwaysApply: true
+---
+
+# Simplicity and readability
+
+This is a lightweight showcase project—not a production platform. Optimize for clarity over cleverness.
+
+## Default to simple
+
+- Prefer plain functions and small modules over abstractions, factories, or deep inheritance
+- One repo, one Next.js app—no microservices, packages, or plugin systems unless clearly required
+- Reuse existing domain services; do not duplicate logic for "future flexibility"
+- Skip premature optimization, caching layers, and generic frameworks
+
+## Code style
+
+- Names should read like product language: `getAccountContext`, `calculateRiskSignals`
+- Keep files focused; split only when a file becomes hard to follow
+- Comments only for non-obvious business rules—not for obvious code
+- Match surrounding conventions; do not introduce new patterns mid-project
+
+## Scope discipline
+
+- Build what the README and demo need; defer nice-to-haves (Ollama, MCP server, extra accounts)
+- When choosing between two approaches, pick the one with fewer moving parts
+- If a feature needs more than ~1 day of scope, cut or document as Phase 2
+
+## Tests
+
+- Test behavior that matters for the demo: risk rules, validation, account isolation
+- Avoid testing implementation details or framework internals
+
+## Red flags (avoid unless user asks)
+
+- Repository/DAO layers on top of Drizzle for a 2-account demo
+- Config-driven rule engines when a plain `if` in `risk-engine.ts` suffices
+- Wrapper types around every API response
+- "Enterprise" error-handling hierarchies
