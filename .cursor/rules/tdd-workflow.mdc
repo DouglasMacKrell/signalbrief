@@ -1,28 +1,47 @@
 ---
-description: Test-driven development for domain logic and API behavior
+description: Strict test-driven development — tests before implementation, always
 alwaysApply: true
 ---
 
-# TDD workflow
+# TDD workflow (strict)
 
-## Default order
+## Non-negotiable order
 
-1. Write or update a failing test in `tests/` that describes the behavior
-2. Implement the smallest change to make it pass
-3. Refactor without changing behavior
-4. Run `npm test` before every commit
+1. **Write a failing test first** — unit, integration, or E2E depending on the layer
+2. Run the test and confirm it **fails for the right reason**
+3. Implement the **smallest** change to make it pass
+4. Refactor without changing behavior
+5. Run the full test suite before staging
 
-## What gets tests first
+Do not implement features, bug fixes, or refactors without a test that proves the behavior. If you already wrote code, stop and add the test retroactively before committing.
 
-- Domain logic: `src/domain/*` (risk engine, briefing validation, evidence checks)
-- Pure functions and Zod schemas before UI wiring
-- API route behavior via service-layer tests when possible
+## Test layers
 
-## What can skip upfront tests
+| Layer | Location | Requires | Proves |
+|---|---|---|---|
+| Unit | `tests/**/*.test.ts` | nothing | Pure domain logic, schemas, providers (mocked IO) |
+| Integration | `tests/integration/**/*.integration.test.ts` | Docker Postgres | DB queries, services, API route handlers |
+| E2E | `tests/e2e/**/*.spec.ts` | `docker compose up -d` + dev server | User-visible flows in the browser |
 
-- One-off layout/CSS tweaks
-- README and copy changes (unless they embed dynamic examples)
+## Commands
+
+```bash
+npm run test:unit          # fast — domain/providers
+npm run test:integration   # Postgres — services + API
+npm run test:e2e           # Playwright — full UI flows
+npm test                   # unit + integration (pre-commit)
+npm run test:all           # unit + integration + e2e
+```
 
 ## Pre-commit gate
 
-Husky runs `npm test` on every commit. Do not commit broken tests. Fix or revert before staging.
+Husky runs `npm test` (unit + integration). **Docker Postgres must be running** for commits to pass.
+
+Run `npm run test:e2e` before merging to `main`.
+
+## What still skips upfront tests
+
+- Copy-only README/doc edits with no behavior claims
+- Pure formatting with zero logic change
+
+Everything else gets a test first.

@@ -1,14 +1,19 @@
 import path from "node:path";
 import { defineConfig } from "vitest/config";
 
-/** @deprecated Use vitest.unit.config.ts — kept for tooling compatibility */
 export default defineConfig({
   test: {
+    name: "unit",
     globals: true,
     environment: "node",
     include: ["tests/**/*.test.ts"],
     exclude: ["tests/integration/**"],
     passWithNoTests: true,
+    coverage: {
+      provider: "v8",
+      include: ["src/domain/**", "src/providers/**", "src/seed/**"],
+      reporter: ["text", "text-summary"],
+    },
   },
   resolve: {
     alias: {

@@ -9,7 +9,7 @@ This version has breaking changes — APIs, conventions, and file structure may 
 Project rules live in `.cursor/rules/` and are always applied:
 
 - **security-and-secrets** — no keys, paths, or real PII in commits
-- **tdd-workflow** — tests before domain logic; `npm test` before commit
+- **tdd-workflow** — failing test first (unit → integration → E2E); `npm test` before commit
 - **git-push-safety** — small commits often; ask user before every push
 - **documentation** — keep README and `docs/` in sync with code changes
 - **simplicity** — lightweight showcase; readable code over enterprise patterns

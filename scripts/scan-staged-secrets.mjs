@@ -19,6 +19,7 @@ const ALLOWLIST_PREFIXES = [
   "node_modules/",
   ".next/",
   "drizzle/meta/",
+  ".github/workflows/",
 ];
 
 const RULES = [

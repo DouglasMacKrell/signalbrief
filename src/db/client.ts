@@ -24,4 +24,10 @@ export function getDb() {
   return drizzle(globalForDb.postgresClient, { schema });
 }
 
+export async function closeDb() {
+  if (!globalForDb.postgresClient) return;
+  await globalForDb.postgresClient.end({ timeout: 5 });
+  globalForDb.postgresClient = undefined;
+}
+
 export type Db = ReturnType<typeof getDb>;
