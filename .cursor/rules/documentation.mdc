@@ -1,0 +1,42 @@
+---
+description: Keep public docs in sync with code changes
+alwaysApply: true
+---
+
+# Documentation
+
+## Public docs (committed)
+
+| File | Purpose |
+|---|---|
+| `README.md` | Entry point: what, why, quick start, demo URL |
+| `docs/architecture.md` | System design and data model |
+| `docs/security.md` | Secrets, hooks, LLM boundaries |
+| `docs/deployment.md` | Render and env vars |
+| `docs/demo-guide.md` | Screen-share walkthrough |
+
+## Local only (never commit)
+
+- `SIGNALBRIEF_PLAN.md` — internal build plan and interview strategy
+
+## When to update docs
+
+In the **same commit** as the feature when you change:
+
+- API routes or response shapes
+- Environment variables → also update `.env.example`
+- Risk rules, briefing schema, or seed narratives
+- Deploy config (`render.yaml`) or npm scripts referenced in README
+
+## Phase gate
+
+Before marking a build phase complete:
+
+1. README quick-start commands still work
+2. New env vars appear in `.env.example` with placeholders
+3. Architecture doc reflects actual file paths and services
+4. Demo guide matches seeded account behavior
+
+## Tone
+
+Public docs are interviewer-safe: product and engineering focus only. No job-application strategy or private notes.

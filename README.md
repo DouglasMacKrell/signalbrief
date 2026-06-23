@@ -1,36 +1,129 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SignalBrief
 
-## Getting Started
+**Evidence-backed account intelligence for revenue teams.**
 
-First, run the development server:
+SignalBrief is an internal GTM application prototype that unifies account context from CRM, call, support, and product-health sources into a single dashboard—with deterministic risk signals and structured account briefings backed by evidence.
+
+> Seed scripts simulate upstream source-system ingestion. In production, these would be replaced by idempotent connectors, source metadata, freshness monitoring, backfills, and canonical warehouse models.
+
+## Live demo
+
+<!-- Update after Render deploy -->
+**Demo URL:** _Coming soon — deploy via [Render](docs/deployment.md)_
+
+## What it demonstrates
+
+- Unified account view across Salesforce-style, Gong-style, Zendesk-style, and product analytics data
+- Canonical `accountId` joins with source provenance (`sourceSystem`, `sourceId`)
+- Deterministic risk engine with linked evidence
+- Structured briefing generation with Zod validation and audit logs
+- Human-in-the-loop feedback—no autonomous write-back to source systems
+
+## Stack
+
+| Layer | Choice |
+|---|---|
+| App | Next.js, TypeScript, Tailwind CSS |
+| Database | PostgreSQL |
+| ORM | Drizzle |
+| Validation | Zod |
+| Tests | Vitest |
+| Deploy | Render (web + Postgres) |
+
+## Quick start
+
+### Prerequisites
+
+- Node.js 20+
+- PostgreSQL (local Docker or hosted)
+
+### Setup
 
 ```bash
+git clone https://github.com/DouglasMacKrell/signalbrief.git
+cd signalbrief
+npm install
+cp .env.example .env
+# Edit .env with your DATABASE_URL
+npm run db:migrate   # when migrations exist
+npm run db:seed      # when seed script exists
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command | Purpose |
+|---|---|
+| `npm run dev` | Start development server |
+| `npm test` | Run Vitest suite |
+| `npm run security:scan` | Scan staged files for secrets / PII |
+| `npm run security:scan:all` | Scan all tracked files |
+| `npm run lint` | ESLint |
 
-## Learn More
+## Demo accounts
 
-To learn more about Next.js, take a look at the following resources:
+Fictional SMB/Mid-Market HR/payroll customers (seeded data):
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+| Account | Profile |
+|---|---|
+| **Acme Creative** | Healthy expansion candidate — rising usage, clean support |
+| **Northstar Logistics** | High-risk renewal — stalled pipeline, open tickets, declining usage |
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+See [docs/demo-guide.md](docs/demo-guide.md) for a walkthrough.
 
-## Deploy on Vercel
+## Architecture
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```mermaid
+flowchart TB
+  subgraph seed [SeedLayer]
+    SF[Salesforce_style]
+    Gong[Gong_style]
+    ZD[Zendesk_style]
+    PH[Product_health]
+  end
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+  seed --> PG[(Postgres)]
+  PG --> SVC[Domain_services]
+  SVC --> API[Nextjs_API]
+  API --> UI[Dashboard]
+  SVC --> BRIEF[Briefing_provider]
+  BRIEF --> RUNS[briefing_runs]
+```
+
+Details: [docs/architecture.md](docs/architecture.md)
+
+## Trust boundaries
+
+- **Deterministic risks** are computed in application code—not by the LLM
+- **Briefings** must pass schema validation; evidence IDs must exist in account context
+- **Production** uses rules-based fallback briefings (no Ollama dependency)
+- **No write-back** to Salesforce, Gong, or Zendesk without explicit user approval
+
+Details: [docs/security.md](docs/security.md)
+
+## Production roadmap
+
+1. Idempotent ELT connectors → Snowflake canonical models
+2. MCP read layer for agent-composable GTM data (Phase 2)
+3. Optional hosted LLM inference behind authenticated proxy
+
+## Documentation
+
+| Doc | Contents |
+|---|---|
+| [docs/architecture.md](docs/architecture.md) | Data model, services, provider pattern |
+| [docs/security.md](docs/security.md) | Secrets, Ollama, validation, pre-commit gates |
+| [docs/deployment.md](docs/deployment.md) | Render setup, env vars, cold starts |
+| [docs/demo-guide.md](docs/demo-guide.md) | Interviewer-friendly product walkthrough |
+
+## Development practices
+
+- **TDD** for domain logic (`src/domain/`) — see `.cursor/rules/tdd-workflow.mdc`
+- **Pre-commit hooks** run secret/PII scan + tests on every commit
+- **Commit often**, push with care — see `.cursor/rules/git-push-safety.mdc`
+
+## License
+
+Private portfolio / interview project. All rights reserved unless otherwise noted.
