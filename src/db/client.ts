@@ -13,7 +13,14 @@ function createClient() {
     throw new Error("DATABASE_URL is not set");
   }
 
-  return postgres(connectionString, { max: 1 });
+  const isRender =
+    process.env.RENDER === "true" ||
+    connectionString.includes("render.com");
+
+  return postgres(connectionString, {
+    max: 1,
+    ...(isRender ? { ssl: { rejectUnauthorized: false } } : {}),
+  });
 }
 
 export function getDb() {

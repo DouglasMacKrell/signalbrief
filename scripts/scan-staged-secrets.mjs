@@ -12,6 +12,7 @@ const scanAll = process.argv.includes("--all");
 const ALLOWLIST = new Set([
   ".env.example",
   "scripts/scan-staged-secrets.mjs",
+  "scripts/prepare.mjs",
   "scripts/preflight-postgres.ts",
   "scripts/preflight-e2e.ts",
   "scripts/run-e2e.ts",
