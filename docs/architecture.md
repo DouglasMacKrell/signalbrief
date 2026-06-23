@@ -90,7 +90,7 @@ interface BriefingProvider {
 }
 ```
 
-Production defaults to `rules-fallback`. Ollama is optional for local development only.
+Production defaults to `rules-fallback`. Local Ollama defaults to `qwen3:14b`. See [QUICKSTART.md](./QUICKSTART.md) for lighter alternatives.
 
 ## MCP Phase 2 (planned)
 

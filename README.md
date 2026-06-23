@@ -32,25 +32,20 @@ SignalBrief is an internal GTM application prototype that unifies account contex
 
 ## Quick start
 
-### Prerequisites
-
-- Node.js 20+
-- PostgreSQL (local Docker or hosted)
-
-### Setup
+**Full guide:** [docs/QUICKSTART.md](docs/QUICKSTART.md)
 
 ```bash
 git clone https://github.com/DouglasMacKrell/signalbrief.git
-cd signalbrief
-npm install
+cd signalbrief && npm install
 cp .env.example .env
-# Edit .env with your DATABASE_URL
-npm run db:migrate   # when migrations exist
-npm run db:seed      # when seed script exists
+docker compose up -d
+npm run db:setup
 npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000).
+
+For local Ollama briefings, set `OLLAMA_ENABLED=true` and `BRIEFING_PROVIDER=ollama`. Default model is `qwen3:14b` — see [docs/QUICKSTART.md](docs/QUICKSTART.md).
 
 ### Scripts
 
@@ -70,6 +65,9 @@ Fictional SMB/Mid-Market HR/payroll customers (seeded data):
 |---|---|
 | **Acme Creative** | Healthy expansion candidate — rising usage, clean support |
 | **Northstar Logistics** | High-risk renewal — stalled pipeline, open tickets, declining usage |
+| **Brightline Health Clinic** | Moderate renewal — mixed call themes, open support ticket |
+| **Summit Legal Partners** | Enterprise stable renewal — strong health, low friction |
+| **Harbor Foods Co-op** | Early-stage discovery — stalled deal, inactive outreach |
 
 See [docs/demo-guide.md](docs/demo-guide.md) for a walkthrough.
 
@@ -113,6 +111,7 @@ Details: [docs/security.md](docs/security.md)
 
 | Doc | Contents |
 |---|---|
+| [docs/QUICKSTART.md](docs/QUICKSTART.md) | **Start here** — install, seed, Ollama (`qwen3:14b` default), troubleshooting |
 | [docs/architecture.md](docs/architecture.md) | Data model, services, provider pattern |
 | [docs/security.md](docs/security.md) | Secrets, Ollama, validation, pre-commit gates |
 | [docs/deployment.md](docs/deployment.md) | Render setup, env vars, cold starts |

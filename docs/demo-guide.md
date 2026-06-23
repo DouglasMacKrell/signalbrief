@@ -6,29 +6,52 @@ A product-focused walkthrough for screen sharing. Fictional companies and data o
 
 Revenue teams prep for customer calls by jumping between CRM, call recordings, support tickets, and product usage dashboards. Context is scattered; renewal risk is easy to miss.
 
-## Account selector
+## Five demo accounts
 
-Open the app and choose between two contrasting demo accounts:
+| Account | Segment | Story | Risk level |
+|---|---|---|---|
+| **Acme Creative** | Mid-Market | Expansion-ready; positive calls, usage up | Low |
+| **Northstar Logistics** | SMB | Renewal at risk; payroll errors, open high-priority ticket | High |
+| **Brightline Health Clinic** | Mid-Market | Mixed renewal signals; onboarding friction | Medium |
+| **Summit Legal Partners** | Enterprise | Stable enterprise renewal; compliance positive | Low |
+| **Harbor Foods Co-op** | SMB | Stalled discovery; long time in stage, quiet outreach | Medium |
 
 ### Acme Creative — healthy expansion
 
-- Mid-Market creative agency, ~85 employees
 - Opportunity in **Negotiation**, strong probability
-- Recent calls: positive themes (payroll automation, contractor onboarding)
-- No open support tickets
-- Product health trending **up**
+- Recent calls: payroll automation, contractor onboarding
+- No open support tickets · usage **up**
 
-**What to show:** Clean panels, low or no risk signals. Generate a briefing and point to evidence IDs tied to source records.
+**Show:** Low risk count, Ollama or rules briefing with positive next steps.
 
 ### Northstar Logistics — high-risk renewal
 
-- SMB logistics company, ~38 employees
-- Opportunity in **Renewal**, stalled in stage
-- Recent calls: negative themes (payroll errors, support frustration)
-- **High-priority support ticket** open multiple days
-- Product health trending **down**, low score
+- **Renewal** stalled 38 days · high-priority ticket open 12+ days
+- Negative call themes · usage **down**, health score 41
 
-**What to show:** Risk cards with severity badges and linked evidence. Briefing next-best-action. Stale-data banner if sources are outdated.
+**Show:** Risk cards with evidence chips, executive outreach in briefing.
+
+### Brightline Health Clinic — moderate renewal
+
+- Renewal in 40 days · normal open ticket on benefits docs
+- Neutral call: wants better onboarding before open enrollment
+- Health score 58, flat usage
+
+**Show:** Medium risks only; balanced briefing.
+
+### Summit Legal Partners — enterprise stable
+
+- $120k renewal, 85% probability · positive compliance call
+- No open tickets · health 76
+
+**Show:** Clean account; contrast with Northstar.
+
+### Harbor Foods Co-op — stalled discovery
+
+- **Discovery** deal, 45 days in stage, last activity 26 days ago
+- Pending support ticket for demo access
+
+**Show:** Stalled opportunity + no-activity risks.
 
 ## Features to highlight
 
@@ -40,8 +63,20 @@ Open the app and choose between two contrasting demo accounts:
 | Support | Open ticket priority and age |
 | Product health | Score, usage trend, active users |
 | Risk signals | Deterministic rules—not LLM guesses |
-| AI briefing | Structured JSON, evidence citations, provider label |
+| AI briefing | Structured JSON, evidence citations, provider label (`ollama` locally) |
 | Feedback | Helpful / not helpful captured for iteration |
+
+## Local Ollama demo tip
+
+Enable in `.env`:
+
+```env
+BRIEFING_PROVIDER=ollama
+OLLAMA_ENABLED=true
+OLLAMA_MODEL=qwen3:14b
+```
+
+Mention: risks are computed in code first; the LLM summarizes curated context with schema validation—not free-form guessing.
 
 ## Trust boundaries (1–2 minutes)
 
@@ -53,11 +88,12 @@ Open the app and choose between two contrasting demo accounts:
 ## Suggested flow (~10 minutes)
 
 1. Problem framing
-2. Architecture (README or `docs/architecture.md` diagram)
-3. Acme Creative — healthy path
+2. Architecture ([QUICKSTART.md](./QUICKSTART.md) or [architecture.md](./architecture.md))
+3. Acme Creative — healthy path + generate briefing
 4. Northstar Logistics — at-risk path
-5. Trust boundaries and production roadmap
-6. Q&A
+5. Optional: Brightline for moderate risk
+6. Trust boundaries and production roadmap
+7. Q&A
 
 ## After deploy
 

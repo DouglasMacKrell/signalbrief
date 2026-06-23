@@ -4,6 +4,7 @@ Public, interviewer-safe documentation for SignalBrief. Internal planning notes 
 
 | Document | When to read |
 |---|---|
+| **[QUICKSTART.md](./QUICKSTART.md)** | **Start here** — install, seed, Ollama, first demo |
 | [architecture.md](./architecture.md) | System design, data model, service layer |
 | [security.md](./security.md) | Secrets handling, LLM boundaries, hooks |
 | [deployment.md](./deployment.md) | Render deploy, env vars, operations |
