@@ -120,7 +120,9 @@ Details: [docs/security.md](docs/security.md)
 
 ## Development practices
 
+- **Branches:** day-to-day work on `develop`; merge to `main` at stable milestones
 - **TDD** for domain logic (`src/domain/`) — see `.cursor/rules/tdd-workflow.mdc`
+- **Simplicity** over enterprise patterns — see `.cursor/rules/simplicity.mdc`
 - **Pre-commit hooks** run secret/PII scan + tests on every commit
 - **Commit often**, push with care — see `.cursor/rules/git-push-safety.mdc`
 
