@@ -11,6 +11,10 @@
     "test:watch": "vitest",
     "security:scan": "node scripts/scan-staged-secrets.mjs",
     "security:scan:all": "node scripts/scan-staged-secrets.mjs --all",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "db:seed": "tsx scripts/seed-database.ts",
+    "db:setup": "npm run db:migrate && npm run db:seed",
     "prepare": "husky"
   },
   "dependencies": {
