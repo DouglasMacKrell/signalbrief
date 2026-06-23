@@ -12,7 +12,7 @@ import {
   opportunities,
   supportTickets,
 } from "../src/db/schema";
-import { demoAccountsSeed } from "../src/seed/demo-accounts";
+import { demoAccountsSeed, DEMO_ACCOUNT_COUNT } from "../src/seed/demo-accounts";
 
 async function main() {
   const url = process.env.DATABASE_URL;
@@ -37,7 +37,7 @@ async function main() {
   await db.insert(supportTickets).values(demoAccountsSeed.tickets);
   await db.insert(healthSnapshots).values(demoAccountsSeed.healthSnapshots);
 
-  console.log(`Seeded ${demoAccountsSeed.accounts.length} accounts.`);
+  console.log(`Seeded ${DEMO_ACCOUNT_COUNT} accounts.`);
 
   await client.end();
 }
