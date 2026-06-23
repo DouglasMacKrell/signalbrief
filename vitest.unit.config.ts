@@ -7,7 +7,7 @@ export default defineConfig({
     globals: true,
     environment: "node",
     include: ["tests/**/*.test.ts"],
-    exclude: ["tests/integration/**"],
+    exclude: ["tests/integration/**", "tests/ollama/**"],
     passWithNoTests: true,
     coverage: {
       provider: "v8",
