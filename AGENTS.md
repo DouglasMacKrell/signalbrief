@@ -10,7 +10,7 @@ Project rules live in `.cursor/rules/` and are always applied:
 
 - **security-and-secrets** — no keys, paths, or real PII in commits
 - **tdd-workflow** — failing test first (unit → integration → E2E); `npm test` before commit
-- **git-push-safety** — small commits often; ask user before every push
+- **git-push-safety** — auto-commit on `develop` when hooks pass; ask before every push
 - **documentation** — keep README and `docs/` in sync with code changes
 - **simplicity** — lightweight showcase; readable code over enterprise patterns
 

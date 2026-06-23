@@ -13,11 +13,28 @@ alwaysApply: true
 
 Before merging to `main`: `npm test`, `npm run security:scan:all`, docs updated if needed.
 
-## Commit often
+## Commit often — auto-commit on `develop`
 
-- Make small, focused commits as each logical unit completes
-- Prefer messages that explain *why*: `add risk engine for stalled renewals`, not `wip`
-- Push `develop` regularly so rollback is easy — but never push unchecked sensitive content
+On **`develop`**, commit automatically when a logical unit of work is done. Do not wait for the user to ask. Husky pre-commit (secret/PII scan + `npm test`) is the gate — if hooks pass, commit.
+
+**When to commit:**
+- A feature, fix, test layer, or doc update is complete and tests pass
+- After fixing pre-commit failures (new commit, never `--no-verify`)
+- Small, focused commits — one concern per message
+
+**When NOT to commit (stop and ask):**
+- Pre-commit or security scan failed and cannot be fixed cleanly
+- Staged content may contain secrets, real PII, or local paths
+- Change touches `.env`, credentials, or deployment secrets
+- You would need `--no-verify` to proceed
+
+**Commit workflow:**
+1. Run `git status` / `git diff` before staging
+2. Stage only relevant files (never `.env`, `SIGNALBRIEF_PLAN.md`, or local artifacts)
+3. Write a 1–2 sentence message focused on *why*
+4. Commit — hooks run automatically; fix and retry if they fail
+
+**Still ask before committing** when on `main`, a release branch, or any branch other than `develop` unless the user says otherwise.
 
 ## Before every push — ask the user
 
