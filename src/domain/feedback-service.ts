@@ -2,6 +2,7 @@ import { randomUUID } from "node:crypto";
 
 import { getDb } from "@/src/db/client";
 import { feedbackEvents } from "@/src/db/schema";
+import { logTelemetry } from "@/src/telemetry/logger";
 
 export async function submitFeedback(input: {
   accountId: string;
@@ -18,6 +19,12 @@ export async function submitFeedback(input: {
     sentiment: input.sentiment,
     comment: input.comment ?? null,
     createdAt: new Date(),
+  });
+
+  logTelemetry({
+    event: "feedback_submitted",
+    accountId: input.accountId,
+    sentiment: input.sentiment,
   });
 
   return { ok: true as const };

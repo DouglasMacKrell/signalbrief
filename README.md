@@ -105,7 +105,7 @@ Details: [docs/security.md](docs/security.md)
 ## Production roadmap
 
 1. Idempotent ELT connectors → Snowflake canonical models
-2. MCP read layer for agent-composable GTM data (Phase 2)
+2. MCP read layer for agent-composable GTM data — [docs/mcp.md](docs/mcp.md) (stdio, local)
 3. Optional hosted LLM inference behind authenticated proxy
 
 ## Documentation
@@ -117,6 +117,7 @@ Details: [docs/security.md](docs/security.md)
 | [docs/security.md](docs/security.md) | Secrets, Ollama, validation, pre-commit gates |
 | [docs/deployment.md](docs/deployment.md) | Render setup, env vars, cold starts |
 | [docs/demo-guide.md](docs/demo-guide.md) | Interviewer-friendly product walkthrough |
+| [docs/mcp.md](docs/mcp.md) | MCP read-only tools for agents (Cursor) |
 
 ## Development practices
 

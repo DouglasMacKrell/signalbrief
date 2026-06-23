@@ -7,6 +7,7 @@ import { formatRelative, Panel, RiskCard } from "@/components/dashboard-ui";
 import { getAccountContext, getAccounts } from "@/src/domain/account-context";
 import { getBriefingProviderLabel } from "@/src/domain/briefing-provider";
 import { calculateRiskSignals } from "@/src/domain/risk-engine";
+import { logTelemetry } from "@/src/telemetry/logger";
 
 export const dynamic = "force-dynamic";
 
@@ -22,6 +23,8 @@ export default async function AccountDashboardPage({
   ]);
 
   if (!context) notFound();
+
+  logTelemetry({ event: "account_viewed", accountId });
 
   const risks = calculateRiskSignals(context);
   const { account, opportunity, calls, tickets, health, freshness } = context;

@@ -9,6 +9,7 @@ import { validateEvidenceIds } from "@/src/domain/evidence";
 import { BriefingSchema, type Briefing } from "@/src/domain/briefing-schema";
 import { getBriefingProvider } from "@/src/domain/briefing-provider";
 import { calculateRiskSignals } from "@/src/domain/risk-engine";
+import { logTelemetry } from "@/src/telemetry/logger";
 
 export class BriefingValidationError extends Error {
   constructor(message: string) {
@@ -42,6 +43,12 @@ export async function generateBriefing(accountId: string) {
   const started = Date.now();
   const runId = randomUUID();
 
+  logTelemetry({
+    event: "briefing_requested",
+    accountId,
+    provider: provider.name,
+  });
+
   try {
     const raw = await provider.generate(context, risks);
     const briefing = BriefingSchema.parse(raw);
@@ -59,6 +66,14 @@ export async function generateBriefing(accountId: string) {
       outputJson: briefing,
       errorMessage: null,
       createdAt: new Date(),
+    });
+
+    logTelemetry({
+      event: "briefing_generated",
+      accountId,
+      provider: provider.name,
+      latencyMs,
+      success: true,
     });
 
     return {
@@ -81,6 +96,15 @@ export async function generateBriefing(accountId: string) {
       outputJson: null,
       errorMessage: message,
       createdAt: new Date(),
+    });
+
+    logTelemetry({
+      event: "briefing_failed",
+      accountId,
+      provider: provider.name,
+      latencyMs,
+      success: false,
+      metadata: { error: message.slice(0, 200) },
     });
 
     return { error: message, status: 422 };

@@ -101,6 +101,17 @@ export function BriefingPanel({
             </div>
           )}
 
+          {briefing.positiveSignals.length > 0 && (
+            <div>
+              <h3 className="font-semibold">Positive signals</h3>
+              <ul className="mt-2 list-disc space-y-1 pl-5">
+                {briefing.positiveSignals.map((signal) => (
+                  <li key={signal.label}>{signal.label}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
           <div>
             <h3 className="font-semibold">Next best action</h3>
             <p className="mt-1">{briefing.nextBestAction.action}</p>
@@ -118,7 +129,11 @@ export function BriefingPanel({
             </ul>
           </div>
 
-          <FeedbackForm accountId={accountId} briefingRunId={briefingRunId} />
+          <FeedbackForm
+            accountId={accountId}
+            briefingRunId={briefingRunId}
+            briefing={briefing}
+          />
         </div>
       )}
     </section>
@@ -128,9 +143,11 @@ export function BriefingPanel({
 function FeedbackForm({
   accountId,
   briefingRunId,
+  briefing,
 }: {
   accountId: string;
   briefingRunId: string | null;
+  briefing: Briefing;
 }) {
   const [comment, setComment] = useState("");
   const [message, setMessage] = useState<string | null>(null);
@@ -154,6 +171,26 @@ function FeedbackForm({
     }
   }
 
+  async function draftFollowUp() {
+    const res = await fetch("/api/telemetry", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        event: "draft_follow_up_requested",
+        accountId,
+        metadata: {
+          action: briefing.nextBestAction.action.slice(0, 120),
+        },
+      }),
+    });
+
+    if (res.ok) {
+      setMessage("Draft follow-up logged — no write-back to source systems.");
+    } else {
+      setMessage("Could not log draft follow-up.");
+    }
+  }
+
   return (
     <div className="border-t border-slate-200 pt-4 dark:border-slate-800">
       <h3 className="font-semibold">Feedback</h3>
@@ -173,6 +210,13 @@ function FeedbackForm({
           Not helpful
         </button>
       </div>
+      <button
+        type="button"
+        onClick={draftFollowUp}
+        className="mt-3 rounded-lg border border-dashed border-slate-300 px-3 py-1.5 text-sm text-slate-700 hover:bg-slate-50 dark:border-slate-600 dark:text-slate-300 dark:hover:bg-slate-900"
+      >
+        Draft follow-up task
+      </button>
       <input
         type="text"
         placeholder="What was missing?"

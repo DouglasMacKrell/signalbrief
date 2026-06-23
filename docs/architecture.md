@@ -30,6 +30,8 @@ app/                    Next.js pages and API routes
 src/db/                 Drizzle schema, client, migrations
 src/domain/             Business logic (pure where possible)
 src/providers/          Briefing provider implementations
+src/telemetry/          Structured event logging
+src/mcp/                Read-only MCP tools + stdio server
 src/seed/               Demo account seed data
 scripts/                DB seed, secret scan
 tests/                  Vitest domain and API tests
@@ -92,9 +94,9 @@ interface BriefingProvider {
 
 Production defaults to `rules-fallback`. Local Ollama defaults to `qwen3:14b`. See [QUICKSTART.md](./QUICKSTART.md) for lighter alternatives.
 
-## MCP Phase 2 (planned)
+## MCP agent layer (stdio)
 
-A second Render service would expose **read-only** tools backed by the same domain services:
+Read-only tools for MCP clients, backed by the same domain services as the dashboard. See [mcp.md](./mcp.md).
 
 | Tool | Purpose |
 |---|---|
@@ -108,7 +110,7 @@ Briefing generation stays in the app layer (validation + audit), not in MCP.
 
 ```mermaid
 flowchart LR
-  Agent[MCP_client] -->|Streamable_HTTP| MCP[mcp_service]
+  Agent[MCP_client] -->|stdio| MCP[mcp_server]
   MCP --> Domain[shared_domain]
   Web[web_service] --> Domain
   Domain --> PG[(Postgres)]
