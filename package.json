@@ -21,6 +21,7 @@
     "db:seed": "tsx scripts/seed-database.ts",
     "db:bootstrap": "tsx scripts/bootstrap-database.ts",
     "db:setup": "npm run db:migrate && npm run db:seed",
+    "ollama:check": "tsx scripts/ollama-check.ts",
     "mcp": "tsx scripts/mcp-server.ts",
     "prepare": "node scripts/prepare.mjs"
   },

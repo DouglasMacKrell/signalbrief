@@ -70,7 +70,23 @@ Revenue teams prep for customer calls by jumping between CRM, call recordings, s
 | Feedback | Helpful / not helpful + optional comment |
 | Draft follow-up | Human-in-the-loop; telemetry only, no write-back |
 
-## Local Ollama demo tip (optional)
+## Local Ollama demo (real AI — recommended for interview)
+
+Render uses **rules-fallback** (no API cost). For a **real LLM briefing**, run locally:
+
+```bash
+npm run ollama:check          # Ollama up + qwen3:14b pulled?
+docker compose up -d
+npm run db:setup
+# .env: BRIEFING_PROVIDER=ollama, OLLAMA_ENABLED=true
+npm run dev                   # → http://localhost:3001
+```
+
+Panel shows **AI briefing** and provider `ollama (qwen3:14b)`. First generation can take 30–90s.
+
+**Screen-share flow:** Open Render URL for “production” data story → switch to **localhost:3001** for “here’s the same app with local Ollama inference.”
+
+## Local Ollama config
 
 Enable in `.env`:
 

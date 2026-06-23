@@ -62,6 +62,7 @@ Skip if you chose **Option A**.
 
 ```bash
 # Install Ollama: https://ollama.com
+npm run ollama:check   # verifies reachability + model pull
 curl http://127.0.0.1:11434/api/tags
 
 # Project default model

@@ -7,9 +7,11 @@ import type { Briefing } from "@/src/domain/briefing-schema";
 export function BriefingPanel({
   accountId,
   configuredProvider,
+  llmBriefing,
 }: {
   accountId: string;
   configuredProvider: string;
+  llmBriefing: boolean;
 }) {
   const [briefing, setBriefing] = useState<Briefing | null>(null);
   const [provider, setProvider] = useState<string | null>(null);
@@ -46,7 +48,7 @@ export function BriefingPanel({
     <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-950">
       <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-          AI Briefing
+          {llmBriefing ? "AI briefing" : "Structured briefing"}
         </h2>
         <div className="flex items-center gap-3">
           <span className="text-xs text-slate-500">
@@ -72,8 +74,9 @@ export function BriefingPanel({
 
       {!briefing && !error && (
         <p className="text-sm text-slate-500">
-          Generate a structured account briefing with evidence-backed risks and
-          next steps.
+          {llmBriefing
+            ? "Generate a structured account briefing via local Ollama — evidence-backed risks and next steps."
+            : "Generate a deterministic briefing from risk signals and account data (no LLM on this deployment)."}
         </p>
       )}
 

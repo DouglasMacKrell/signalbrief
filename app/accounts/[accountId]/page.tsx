@@ -5,7 +5,7 @@ import { BriefingPanel } from "@/components/briefing-panel";
 import { AccountSelector } from "@/components/account-selector";
 import { formatRelative, Panel, RiskCard } from "@/components/dashboard-ui";
 import { getAccountContext, getAccounts } from "@/src/domain/account-context";
-import { getBriefingProviderLabel } from "@/src/domain/briefing-provider";
+import { getBriefingProviderLabel, isLlmBriefingConfigured } from "@/src/domain/briefing-provider";
 import { calculateRiskSignals } from "@/src/domain/risk-engine";
 import { logTelemetry } from "@/src/telemetry/logger";
 
@@ -29,6 +29,7 @@ export default async function AccountDashboardPage({
   const risks = calculateRiskSignals(context);
   const { account, opportunity, calls, tickets, health, freshness } = context;
   const configuredProvider = getBriefingProviderLabel();
+  const llmBriefing = isLlmBriefingConfigured();
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
@@ -195,6 +196,7 @@ export default async function AccountDashboardPage({
           <BriefingPanel
             accountId={accountId}
             configuredProvider={configuredProvider}
+            llmBriefing={llmBriefing}
           />
         </div>
       </main>

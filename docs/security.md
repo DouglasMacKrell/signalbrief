@@ -37,6 +37,16 @@ On push/PR to `main`: full-repo scan + tests (`.github/workflows/secret-scan.yml
 - All LLM calls are server-side; no browser-to-Ollama requests
 - Production deployment uses `BRIEFING_PROVIDER=rules-fallback`
 
+### Do not tunnel Render to your Mac
+
+Pointing the public Render app at a home Ollama instance (ngrok, Cloudflare Tunnel, Tailscale funnel, etc.) is **not supported** and unsafe:
+
+- Ollama has no production-grade auth; a public endpoint invites abuse and GPU/RAM exhaustion
+- Your laptop becomes part of production uptime for anyone with the URL
+- It contradicts the trust story: bounded server-side inference with localhost-only boundaries
+
+**Interview pattern:** [live Render URL](https://signalbrief-web.onrender.com) for the dashboard and data; **localhost:3001** with Ollama for a real AI briefing demo.
+
 ## Model output safety
 
 - Validate all briefing output with Zod

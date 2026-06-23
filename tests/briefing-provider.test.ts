@@ -3,6 +3,7 @@ import { afterEach, describe, expect, it } from "vitest";
 import {
   getBriefingProvider,
   getBriefingProviderLabel,
+  isLlmBriefingConfigured,
 } from "@/src/domain/briefing-provider";
 
 describe("getBriefingProvider", () => {
@@ -24,6 +25,11 @@ describe("getBriefingProvider", () => {
 
     expect(getBriefingProvider().name).toBe("ollama");
     expect(getBriefingProviderLabel()).toBe("ollama (qwen3:14b)");
+    expect(isLlmBriefingConfigured()).toBe(true);
+  });
+
+  it("isLlmBriefingConfigured is false for rules-fallback", () => {
+    expect(isLlmBriefingConfigured()).toBe(false);
   });
 
   it("stays on rules-fallback when ollama env is not fully set", () => {
