@@ -99,7 +99,9 @@ OLLAMA_MODEL=qwen3:14b
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
+Open [http://localhost:3001](http://localhost:3001).
+
+> **Port note:** SignalBrief dev runs on **3001** by default. Port 3000 is often taken by Docker Desktop or other local tools on macOS — if you see a non-SignalBrief page or broken WebSocket/HMR errors at `:3000`, use `:3001` instead.
 
 ## 6. Try the demo
 
@@ -118,12 +120,36 @@ Open [http://localhost:3000](http://localhost:3000).
 
 Full walkthrough: [demo-guide.md](./demo-guide.md).
 
+## 7. Run tests (TDD)
+
+Tests are layered — write a failing test before changing behavior. See `.cursor/rules/tdd-workflow.mdc`.
+
+**Prerequisites:** Docker Postgres running (`docker compose up -d`).
+
+```bash
+npm run test:unit          # Fast — domain, providers, schemas (no DB)
+npm run test:integration   # Postgres — services + API routes
+npm run test:e2e           # Playwright — browser flows (production build on :3456)
+npm test                   # Unit + integration (pre-commit hook)
+npm run test:all           # Everything — run before merging to main
+npm run test:coverage      # Unit coverage report
+```
+
+First-time E2E setup:
+
+```bash
+npx playwright install chromium
+npm run test:e2e
+```
+
+Each step has a timeout and fails fast with a actionable message (Postgres down, port in use, missing browser, server never ready). Typical full E2E run is under 2 minutes when healthy.
+
+CI runs all layers on push/PR to `main` and `develop`.
+
 ## Common commands
 
 ```bash
 npm run dev              # Dev server
-npm test                 # Vitest (runs on pre-commit)
-npm run test:coverage    # Coverage report
 npm run db:seed          # Re-seed demo data
 npm run db:setup         # Migrate + seed
 npm run security:scan    # Scan staged files for secrets
@@ -131,6 +157,24 @@ npm run build            # Production build check
 ```
 
 ## Troubleshooting
+
+### Browser shows wrong app or WebSocket / HMR errors
+
+Port **3000** may be used by Docker or another tool (not SignalBrief). Use the dev URL:
+
+```bash
+npm run dev
+# → http://localhost:3001
+```
+
+Check what is bound to 3000:
+
+```bash
+lsof -i :3000
+curl -I http://127.0.0.1:3000/
+```
+
+E2E tests use port **3456** (`PLAYWRIGHT_PORT`) with a production build — not the dev server.
 
 ### No accounts on the home page
 
@@ -148,7 +192,10 @@ npm run db:setup
 
 ### Pre-commit hook fails
 
+Integration tests need Postgres:
+
 ```bash
+docker compose up -d
 npm run security:scan:all
 npm test
 ```
