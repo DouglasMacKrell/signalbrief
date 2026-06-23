@@ -52,6 +52,39 @@ export function collectEvidenceIds(context: AccountContext): Set<string> {
   return ids;
 }
 
+export function buildEvidenceIndex(
+  context: AccountContext,
+): Record<string, EvidenceRef> {
+  const index: Record<string, EvidenceRef> = {
+    [context.opportunity.sourceId]: opportunityEvidence(context.opportunity),
+    [context.health.sourceId]: healthEvidence(context.health),
+  };
+
+  for (const call of context.calls) {
+    index[call.sourceId] = callEvidence(call);
+  }
+  for (const ticket of context.tickets) {
+    index[ticket.sourceId] = ticketEvidence(ticket);
+  }
+
+  return index;
+}
+
+export function resolveEvidenceRefs(
+  evidenceIds: string[],
+  index: Record<string, EvidenceRef>,
+): EvidenceRef[] {
+  return evidenceIds.map(
+    (id) =>
+      index[id] ?? {
+        sourceSystem: "unknown",
+        sourceId: id,
+        recordType: "opportunity",
+        label: id,
+      },
+  );
+}
+
 export function validateEvidenceIds(
   evidenceIds: string[],
   context: AccountContext,

@@ -2,16 +2,20 @@
 
 import { useState } from "react";
 
+import { EvidenceChipList } from "@/components/dashboard-ui";
 import type { Briefing } from "@/src/domain/briefing-schema";
+import type { EvidenceRef } from "@/src/domain/types";
 
 export function BriefingPanel({
   accountId,
   configuredProvider,
   llmBriefing,
+  evidenceIndex,
 }: {
   accountId: string;
   configuredProvider: string;
   llmBriefing: boolean;
+  evidenceIndex: Record<string, EvidenceRef>;
 }) {
   const [briefing, setBriefing] = useState<Briefing | null>(null);
   const [provider, setProvider] = useState<string | null>(null);
@@ -94,10 +98,16 @@ export function BriefingPanel({
           {briefing.risks.length > 0 && (
             <div>
               <h3 className="font-semibold">Top risks</h3>
-              <ul className="mt-2 list-disc space-y-1 pl-5">
+              <ul className="mt-2 space-y-3">
                 {briefing.risks.map((risk) => (
                   <li key={risk.label}>
-                    [{risk.severity}] {risk.label}
+                    <span>
+                      [{risk.severity}] {risk.label}
+                    </span>
+                    <EvidenceChipList
+                      evidenceIds={risk.evidenceIds}
+                      evidenceIndex={evidenceIndex}
+                    />
                   </li>
                 ))}
               </ul>
@@ -107,9 +117,15 @@ export function BriefingPanel({
           {briefing.positiveSignals.length > 0 && (
             <div>
               <h3 className="font-semibold">Positive signals</h3>
-              <ul className="mt-2 list-disc space-y-1 pl-5">
+              <ul className="mt-2 space-y-3">
                 {briefing.positiveSignals.map((signal) => (
-                  <li key={signal.label}>{signal.label}</li>
+                  <li key={signal.label}>
+                    {signal.label}
+                    <EvidenceChipList
+                      evidenceIds={signal.evidenceIds}
+                      evidenceIndex={evidenceIndex}
+                    />
+                  </li>
                 ))}
               </ul>
             </div>
@@ -121,6 +137,10 @@ export function BriefingPanel({
             <p className="text-slate-600 dark:text-slate-400">
               {briefing.nextBestAction.reason}
             </p>
+            <EvidenceChipList
+              evidenceIds={briefing.nextBestAction.evidenceIds}
+              evidenceIndex={evidenceIndex}
+            />
           </div>
 
           <div>

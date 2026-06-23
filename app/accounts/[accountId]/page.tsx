@@ -6,6 +6,7 @@ import { AccountSelector } from "@/components/account-selector";
 import { formatRelative, Panel, RiskCard } from "@/components/dashboard-ui";
 import { getAccountContext, getAccounts } from "@/src/domain/account-context";
 import { getBriefingProviderLabel, isLlmBriefingConfigured } from "@/src/domain/briefing-provider";
+import { buildEvidenceIndex } from "@/src/domain/evidence";
 import { calculateRiskSignals } from "@/src/domain/risk-engine";
 import { logTelemetry } from "@/src/telemetry/logger";
 
@@ -27,6 +28,7 @@ export default async function AccountDashboardPage({
   logTelemetry({ event: "account_viewed", accountId });
 
   const risks = calculateRiskSignals(context);
+  const evidenceIndex = buildEvidenceIndex(context);
   const { account, opportunity, calls, tickets, health, freshness } = context;
   const configuredProvider = getBriefingProviderLabel();
   const llmBriefing = isLlmBriefingConfigured();
@@ -197,6 +199,7 @@ export default async function AccountDashboardPage({
             accountId={accountId}
             configuredProvider={configuredProvider}
             llmBriefing={llmBriefing}
+            evidenceIndex={evidenceIndex}
           />
         </div>
       </main>
