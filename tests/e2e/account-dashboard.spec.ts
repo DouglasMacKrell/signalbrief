@@ -17,6 +17,7 @@ test.describe("Account dashboard", () => {
     await page.goto("/accounts/acme-creative");
 
     await expect(page.getByRole("heading", { name: "Acme Creative" })).toBeVisible();
+    await expect(page.getByText("No open support tickets")).toBeVisible();
     await expect(page.getByText("positive", { exact: true })).toBeVisible();
     await expect(page.getByText("Product health")).toBeVisible();
     await expect(page.getByText("82")).toBeVisible();

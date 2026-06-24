@@ -9,6 +9,7 @@ import {
   EvidenceVisibilityProvider,
 } from "@/components/evidence-visibility";
 import { SentimentBadge } from "@/components/sentiment-badge";
+import { SupportTicketsPanel } from "@/components/support-tickets-panel";
 import { RiskCard } from "@/components/risk-card";
 import { getAccountContext, getAccounts } from "@/src/domain/account-context";
 import { getBriefingProviderLabel, isLlmBriefingConfigured } from "@/src/domain/briefing-provider";
@@ -163,24 +164,7 @@ export default async function AccountDashboardPage({
           </Panel>
 
           <Panel title="Support tickets">
-            <div className="space-y-3">
-              {tickets.map((ticket) => (
-                <div
-                  key={ticket.id}
-                  className="rounded-lg border border-slate-100 p-3 text-sm dark:border-slate-800"
-                >
-                  <div className="flex justify-between gap-2">
-                    <span className="font-medium capitalize">
-                      {ticket.priority} · {ticket.status}
-                    </span>
-                    <span className="text-xs text-slate-500">
-                      {formatRelative(ticket.createdAt)}
-                    </span>
-                  </div>
-                  <p className="mt-1">{ticket.summary}</p>
-                </div>
-              ))}
-            </div>
+            <SupportTicketsPanel tickets={tickets} />
           </Panel>
 
           <Panel title="Product health">
