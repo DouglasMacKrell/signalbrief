@@ -30,4 +30,17 @@ test.describe("Briefing flow", () => {
     await page.getByRole("button", { name: "Helpful", exact: true }).click();
     await expect(page.getByText("Thanks — feedback saved.")).toBeVisible();
   });
+
+  test("shows past briefing runs in audit trail", async ({ page }) => {
+    await page.goto("/accounts/acme-creative");
+
+    await page.getByRole("button", { name: "Generate Briefing" }).click();
+    await expect(page.getByRole("heading", { name: "Summary" })).toBeVisible({
+      timeout: 15_000,
+    });
+
+    await page.getByRole("button", { name: "Past briefing runs" }).click();
+    await expect(page.getByText(/Run [a-f0-9]{8}…/).nth(1)).toBeVisible();
+    await expect(page.getByText("success", { exact: true })).toBeVisible();
+  });
 });
