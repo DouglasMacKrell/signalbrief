@@ -7,6 +7,8 @@ test.describe("Account dashboard", () => {
     await expect(page.getByRole("heading", { name: "Northstar Logistics" })).toBeVisible();
     await expect(page.getByText("Risk signals")).toBeVisible();
     await expect(page.getByText("negative", { exact: true })).toBeVisible();
+    await page.getByRole("button", { name: "Show evidence" }).click();
+    await expect(page.getByText("high · Payroll tax filing discrepancy for Q1")).toBeVisible();
     await expect(
       page.getByText("High-priority support issue remains unresolved"),
     ).toBeVisible();

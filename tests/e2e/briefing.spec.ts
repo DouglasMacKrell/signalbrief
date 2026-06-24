@@ -11,6 +11,9 @@ test.describe("Briefing flow", () => {
     await expect(page.getByText("Positive signals")).toBeVisible();
     await expect(page.getByText(/Run [a-f0-9]{8}…/)).toBeVisible();
     await page.getByRole("button", { name: "Show evidence" }).click();
+    await expect(
+      page.getByText("Expansion planning for contractor payroll and benefits"),
+    ).toBeVisible();
     await expect(page.getByText("gong:call_acme_001")).toBeVisible();
     await expect(page.getByText("Next best action")).toBeVisible();
     await expect(page.getByRole("button", { name: "Helpful", exact: true })).toBeVisible();

@@ -4,8 +4,11 @@ import type { EvidenceRef } from "@/src/domain/types";
 
 export function EvidenceChip({ evidence }: { evidence: EvidenceRef }) {
   return (
-    <span className="inline-flex items-center rounded-full bg-slate-100 px-2 py-0.5 text-xs font-mono text-slate-700 dark:bg-slate-800 dark:text-slate-300">
-      {evidence.sourceSystem}:{evidence.sourceId}
+    <span className="inline-flex max-w-full flex-col rounded-lg bg-slate-100 px-2 py-1 text-xs text-slate-700 dark:bg-slate-800 dark:text-slate-300">
+      <span className="font-medium leading-snug">{evidence.label}</span>
+      <span className="font-mono text-[10px] leading-tight text-slate-500 dark:text-slate-400">
+        {evidence.sourceSystem}:{evidence.sourceId}
+      </span>
     </span>
   );
 }
