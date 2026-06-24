@@ -6,6 +6,57 @@ SignalBrief is an internal GTM application prototype that unifies account contex
 
 > Seed scripts simulate upstream source-system ingestion. In production, these would be replaced by idempotent connectors, source metadata, freshness monitoring, backfills, and canonical warehouse models.
 
+## Problem
+
+Revenue teams at high-growth companies do not lack data—they lack **coherent account context** at the moment of action.
+
+| Pain | What actually happens |
+|---|---|
+| **Fragmented systems** | Reps jump between CRM, call recordings, support tickets, and product usage before every renewal or QBR. Each tool has a slice of truth; none owns the full picture. |
+| **Assembly over judgment** | Sellers spend prep time **finding** signals instead of **acting** on them. Renewal risk surfaces late—often as a surprise churn, not an early warning. |
+| **Unexplainable “AI”** | Generic LLM wrappers summarize text without **source provenance**. RevOps and sellers cannot trust output they cannot trace, and compliance-minded teams cannot adopt it. |
+| **Workflow dead-ends** | Dashboards show data but do not close the loop: no structured next step, no feedback signal, no audit trail when something was generated or approved. |
+| **Integration tax** | Every new channel (Slack bot, prep agent, internal tool) re-implements Salesforce/Gong/Zendesk glue unless someone builds a **shared domain layer** first. |
+
+This is the core GTM engineering problem: **turn multi-source customer data into trustworthy, actionable seller workflows**—without giving up governance, evidence, or human approval.
+
+## Solution
+
+SignalBrief is a prototype of how I would approach that role—**internal GTM product**, not a demo chatbot.
+
+### 1. Normalize once, consume everywhere
+
+- Canonical **`accountId`** joins CRM-style opportunities, Gong-style calls, Zendesk-style tickets, and product-health snapshots in Postgres.
+- Every record carries **`sourceSystem`**, **`sourceId`**, and **`sourceUpdatedAt`** so claims are traceable and staleness is visible.
+
+### 2. Deterministic signals before generative narrative
+
+- **Risk rules run in application code** (stalled pipeline, open urgent tickets, usage decline near renewal, negative call themes, etc.)—not LLM guesses.
+- Each risk cites **evidence** and explains **why the rule fired**, so sellers and RevOps can defend the signal.
+
+### 3. Bounded AI for briefings—not open-ended chat
+
+- Briefings are **structured JSON** (summary, risks, positive signals, next action, talking points) validated with **Zod**.
+- Every field that cites data must reference **real evidence IDs** from the account context; invalid output is rejected.
+- **Rules-fallback** provider keeps production reliable; **Ollama** (local only) shows how optional inference fits the same contract.
+
+### 4. Trust, audit, and human-in-the-loop
+
+- Every briefing run is logged (`briefing_runs`: provider, latency, status, output).
+- **Feedback** (helpful / not helpful) captures quality signals for iteration.
+- **Draft follow-up** logs intent via telemetry—**no write-back** to CRM or support systems without explicit user approval.
+
+### 5. Composable for the next workflow
+
+- The same domain services power the **dashboard**, **REST API**, and **read-only MCP tools**—so a prep agent or Slack workflow reads canonical context without duplicating integrations or gaining write access.
+
+### 6. Ship a credible demo without hiding tradeoffs
+
+- Public deploy on Render uses **rules-fallback** (no hosted LLM bill, no tunneling home Ollama).
+- Local dev can run **real inference** when you want to show the full AI path—same app, same validation, honest provider labels.
+
+**In one line:** unify GTM data → surface explainable risk → generate evidence-backed briefings → log and learn → expose the same layer to humans and agents, safely.
+
 ## Live demo
 
 **Demo URL:** [https://signalbrief-web.onrender.com](https://signalbrief-web.onrender.com)
