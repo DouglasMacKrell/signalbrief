@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { logTelemetry } from "@/src/telemetry/logger";
+import { getRecentTelemetry } from "@/src/telemetry/recent-events";
 import type { TelemetryEvent } from "@/src/telemetry/events";
 
 const bodySchema = z.object({
@@ -27,4 +28,23 @@ export async function POST(request: Request) {
   });
 
   return NextResponse.json({ ok: true });
+}
+
+function isTelemetryDebugEnabled(request: Request): boolean {
+  if (process.env.NODE_ENV === "development") return true;
+  const url = new URL(request.url);
+  return url.searchParams.get("debug") === "1";
+}
+
+export async function GET(request: Request) {
+  if (!isTelemetryDebugEnabled(request)) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
+
+  const url = new URL(request.url);
+  const accountId = url.searchParams.get("accountId") ?? undefined;
+
+  return NextResponse.json({
+    events: getRecentTelemetry(accountId),
+  });
 }

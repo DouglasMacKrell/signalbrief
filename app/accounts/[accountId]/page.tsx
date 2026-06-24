@@ -11,6 +11,7 @@ import {
 import { SentimentBadge } from "@/components/sentiment-badge";
 import { SupportTicketsPanel } from "@/components/support-tickets-panel";
 import { RiskCard } from "@/components/risk-card";
+import { TrustDebugFooter } from "@/components/trust-debug-footer";
 import { getAccountContext, getAccounts } from "@/src/domain/account-context";
 import { getBriefingProviderLabel, isLlmBriefingConfigured } from "@/src/domain/briefing-provider";
 import { buildEvidenceIndex } from "@/src/domain/evidence";
@@ -21,10 +22,13 @@ export const dynamic = "force-dynamic";
 
 export default async function AccountDashboardPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ accountId: string }>;
+  searchParams: Promise<{ debug?: string }>;
 }) {
   const { accountId } = await params;
+  const { debug } = await searchParams;
   const [context, allAccounts] = await Promise.all([
     getAccountContext(accountId),
     getAccounts(),
@@ -39,6 +43,8 @@ export default async function AccountDashboardPage({
   const { account, opportunity, calls, tickets, health, freshness } = context;
   const configuredProvider = getBriefingProviderLabel();
   const llmBriefing = isLlmBriefingConfigured();
+  const showTrustDebug =
+    process.env.NODE_ENV === "development" || debug === "1";
 
   return (
     <EvidenceVisibilityProvider>
@@ -200,6 +206,7 @@ export default async function AccountDashboardPage({
           />
         </div>
       </main>
+      <TrustDebugFooter accountId={accountId} enabled={showTrustDebug} />
     </div>
     </EvidenceVisibilityProvider>
   );

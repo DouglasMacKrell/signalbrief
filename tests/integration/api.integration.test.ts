@@ -5,6 +5,7 @@ import { GET as getContext } from "@/app/api/accounts/[accountId]/context/route"
 import { GET as getRisks } from "@/app/api/accounts/[accountId]/risks/route";
 import { GET as getBriefings, POST as postBriefing } from "@/app/api/accounts/[accountId]/briefings/route";
 import { POST as postFeedback } from "@/app/api/feedback/route";
+import { GET as getTelemetry } from "@/app/api/telemetry/route";
 
 describe("API routes (integration)", () => {
   it("GET /api/accounts returns seeded accounts", async () => {
@@ -66,6 +67,22 @@ describe("API routes (integration)", () => {
     expect(getData.runs.length).toBeGreaterThan(0);
     expect(getData.runs[0]?.id).toBe(postData.briefingRunId);
     expect(getData.runs[0]?.status).toBe("success");
+  });
+
+  it("GET /api/telemetry returns recent events when debug is enabled", async () => {
+    await postBriefing(new Request("http://test", { method: "POST" }), {
+      params: Promise.resolve({ accountId: "acme-creative" }),
+    });
+
+    const res = await getTelemetry(
+      new Request("http://test/api/telemetry?accountId=acme-creative&debug=1"),
+    );
+    const data = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(
+      data.events.some((e: { event: string }) => e.event === "briefing_generated"),
+    ).toBe(true);
   });
 
   it("POST /api/feedback accepts sentiment", async () => {
