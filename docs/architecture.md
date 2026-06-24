@@ -67,6 +67,7 @@ sourceUpdatedAt: Date;
 | `getAccounts()` | List demo accounts |
 | `getAccountContext(accountId)` | Unified account payload + freshness |
 | `calculateRiskSignals(accountId)` | Deterministic risk cards with evidence |
+| `getBriefingHistory(accountId)` | List past briefing runs (audit) |
 | `generateBriefing(accountId)` | Provider → validate → persist run |
 | `submitFeedback(...)` | Persist user feedback |
 
@@ -107,6 +108,21 @@ Read-only tools for MCP clients, backed by the same domain services as the dashb
 | `get_open_support_tickets` | Support friction |
 
 Briefing generation stays in the app layer (validation + audit), not in MCP.
+
+## API routes
+
+| Method | Path | Purpose |
+|---|---|---|
+| GET | `/api/accounts` | List accounts |
+| GET | `/api/accounts/:id/context` | Full account context |
+| GET | `/api/accounts/:id/risks` | Risk signals |
+| GET | `/api/accounts/:id/briefings` | Briefing run history |
+| POST | `/api/accounts/:id/briefings` | Generate briefing |
+| POST | `/api/feedback` | User feedback |
+| GET | `/api/telemetry?debug=1` | Recent telemetry (debug / dev only) |
+| POST | `/api/telemetry` | Client events (e.g. draft follow-up) |
+
+Also listed in the home page **Agent layer** callout.
 
 ```mermaid
 flowchart LR

@@ -57,18 +57,24 @@ Revenue teams prep for customer calls by jumping between CRM, call recordings, s
 
 ## Features to highlight
 
-| Panel | Talking point |
+| Panel / control | Talking point |
 |---|---|
+| **Home cards** | Story badge, health score, risk count — pick the right demo account fast |
+| **Agent layer** (home, expand) | Same domain via MCP + REST; read-only; no write-back |
 | Account overview | Canonical identity + data freshness |
 | Opportunity | Pipeline stage, amount, days in stage |
-| Recent calls | Themes and excerpts from Gong-style data |
-| Support | Open ticket priority and age |
+| Recent calls | Sentiment badge + themes/excerpts (Gong-style) |
+| Support | **Open** vs **Resolved** ticket sections |
 | Product health | Score, usage trend, active users |
-| Risk signals | Deterministic rules—not LLM guesses |
-| AI briefing | Structured JSON, evidence citations, provider label |
+| **Show evidence** (header) | Toggle source citations on risks and briefing |
+| Risk signals | **Why this fired** rule + deterministic explanation + evidence chips |
+| Structured briefing | Validated JSON; evidence on risks, signals, next action |
+| After briefing | **Run ID · latency · provider** audit footer |
+| **Past briefing runs** | Collapsible history from `briefing_runs` |
 | Positive signals | Rules/Ollama surface strengths with evidence |
 | Feedback | Helpful / not helpful + optional comment |
 | Draft follow-up | Human-in-the-loop; telemetry only, no write-back |
+| **`?debug=1`** | Trust footer with recent telemetry events |
 
 ## Local Ollama demo (real AI — recommended for interview)
 
@@ -109,12 +115,12 @@ Mention: risks are computed in code first; the LLM summarizes curated context wi
 ## Suggested flow (~10 minutes)
 
 1. Problem framing
-2. Open **live demo** → account selector (five accounts)
-3. **Acme Creative** — healthy path + generate briefing + positive signals
-4. **Northstar Logistics** — at-risk path + evidence on risk cards
-5. Optional: **Brightline** for moderate risk
+2. Open **live demo** → home previews + optional **Agent layer** expand
+3. **Northstar Logistics** — at-risk path → **Show evidence** → risks + briefing + audit trail
+4. **Acme Creative** — healthy contrast + positive signals
+5. Optional: `?debug=1` trust footer · local Ollama on `:3001` if showing real AI
 6. Trust boundaries and production roadmap ([architecture.md](./architecture.md))
-7. Q&A — mention read-only MCP only if asked about agents/automation ([mcp.md](./mcp.md))
+7. Q&A — MCP only if asked ([mcp.md](./mcp.md))
 
 ## If asked about agents / GTM engineering
 

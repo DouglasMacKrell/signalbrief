@@ -53,11 +53,10 @@ Live demo: [https://signalbrief-web.onrender.com](https://signalbrief-web.onrend
 
 After deploy, verify:
 
-- [ ] Account selector loads
-- [ ] Both demo accounts render panels from Postgres
-- [ ] Risk signals show with evidence chips
+- [ ] All five demo accounts on home page
+- [ ] Northstar dashboard shows risk signals with **Why this fired**
 - [ ] Generate Briefing returns valid JSON (rules fallback)
-- [ ] Feedback saves successfully
+- [ ] Past briefing runs and feedback work
 
 ## Making the repo public
 

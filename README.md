@@ -12,6 +12,12 @@ SignalBrief is an internal GTM application prototype that unifies account contex
 
 Runs **rules-fallback** briefings on Render (no Ollama). Free tier may cold-start after ~15 min idle — open the link before a screen share.
 
+## For reviewers (hiring manager / async)
+
+**No screen share?** Start here: **[docs/explorer-guide.md](docs/explorer-guide.md)** — 10-minute self-guided tour of the live app, trust boundaries, and where to read about architecture, security, and MCP.
+
+**Quick path:** Home → **Northstar Logistics** → **Show evidence** → **Generate Briefing** → expand **Past briefing runs**. Add `?debug=1` on any account URL for the telemetry footer.
+
 ## What it demonstrates
 
 - Unified account view across Salesforce-style, Gong-style, Zendesk-style, and product analytics data
@@ -114,11 +120,12 @@ Details: [docs/security.md](docs/security.md)
 
 | Doc | Contents |
 |---|---|
+| [docs/explorer-guide.md](docs/explorer-guide.md) | **For hiring managers** — self-serve live demo tour (no candidate required) |
 | [docs/QUICKSTART.md](docs/QUICKSTART.md) | **Start here** — install, seed, Ollama (`qwen3:14b` default), troubleshooting |
+| [docs/demo-guide.md](docs/demo-guide.md) | Candidate screen-share walkthrough |
 | [docs/architecture.md](docs/architecture.md) | Data model, services, provider pattern |
 | [docs/security.md](docs/security.md) | Secrets, Ollama, validation, pre-commit gates |
 | [docs/deployment.md](docs/deployment.md) | Render setup, env vars, cold starts |
-| [docs/demo-guide.md](docs/demo-guide.md) | Interviewer-friendly product walkthrough |
 | [docs/mcp.md](docs/mcp.md) | MCP read-only tools for agents (Cursor) |
 
 ## Development practices
