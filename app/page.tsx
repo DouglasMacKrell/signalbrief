@@ -27,7 +27,7 @@ export default async function HomePage() {
           account to view unified CRM, call, support, and product health data.
         </p>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {previews.map((preview) => (
             <AccountPreviewCard key={preview.id} preview={preview} />
           ))}
