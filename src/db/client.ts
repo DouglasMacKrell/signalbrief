@@ -19,6 +19,7 @@ function createClient() {
 
   return postgres(connectionString, {
     max: 1,
+    connect_timeout: 10,
     ...(isRender ? { ssl: { rejectUnauthorized: false } } : {}),
   });
 }

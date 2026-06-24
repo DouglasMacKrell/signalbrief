@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import { GET as getHealth } from "@/app/api/health/route";
 import { GET as getAccounts } from "@/app/api/accounts/route";
 import { GET as getContext } from "@/app/api/accounts/[accountId]/context/route";
 import { GET as getRisks } from "@/app/api/accounts/[accountId]/risks/route";
@@ -8,6 +9,15 @@ import { POST as postFeedback } from "@/app/api/feedback/route";
 import { GET as getTelemetry } from "@/app/api/telemetry/route";
 
 describe("API routes (integration)", () => {
+  it("GET /api/health returns liveness without database", async () => {
+    const res = await getHealth();
+    const data = await res.json();
+
+    expect(res.status).toBe(200);
+    expect(data.ok).toBe(true);
+    expect(data.service).toBe("signalbrief");
+  });
+
   it("GET /api/accounts returns seeded accounts", async () => {
     const res = await getAccounts();
     const data = await res.json();

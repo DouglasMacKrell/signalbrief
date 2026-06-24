@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
+# Legacy entrypoint — cold starts use `npm start` only (see render.yaml).
+# Database migrate/bootstrap runs at deploy time via scripts/render-build.sh.
 set -euo pipefail
-
-echo "render-start: migrating…"
-npm run db:migrate
-
-echo "render-start: bootstrapping demo data (skip if already seeded)…"
-npm run db:bootstrap
-
-echo "render-start: starting Next.js…"
 exec npm start

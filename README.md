@@ -63,7 +63,7 @@ SignalBrief is a prototype of how I would approach that role—**internal GTM pr
 
 **Demo URL:** [https://signalbrief-web.onrender.com](https://signalbrief-web.onrender.com)
 
-Runs **rules-fallback** briefings on Render (no Ollama). Free tier may cold-start after ~15 min idle — open the link before a screen share.
+Runs **rules-fallback** briefings on Render (no Ollama). Free tier spins down after ~15 min idle — [open the demo 2–3 minutes early](https://signalbrief-web.onrender.com); cold wake is usually ~1 minute. See [deployment.md](docs/deployment.md#cold-starts) if the Render loading page hangs.
 
 ## Product tour
 
