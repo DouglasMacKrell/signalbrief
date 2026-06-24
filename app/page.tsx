@@ -1,11 +1,10 @@
-import Link from "next/link";
-
-import { getAccounts } from "@/src/domain/account-context";
+import { AccountPreviewCard } from "@/components/account-preview-card";
+import { getAccountPreviews } from "@/src/domain/account-preview";
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const accounts = await getAccounts();
+  const previews = await getAccountPreviews();
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
@@ -29,22 +28,12 @@ export default async function HomePage() {
         </p>
 
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {accounts.map((account) => (
-            <Link
-              key={account.id}
-              href={`/accounts/${account.id}`}
-              className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:border-slate-400 dark:border-slate-800 dark:bg-slate-950 dark:hover:border-slate-600"
-            >
-              <h2 className="text-lg font-semibold">{account.name}</h2>
-              <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
-                {account.industry} · {account.segment}
-              </p>
-              <p className="mt-3 text-sm">Owner: {account.owner}</p>
-            </Link>
+          {previews.map((preview) => (
+            <AccountPreviewCard key={preview.id} preview={preview} />
           ))}
         </div>
 
-        {accounts.length === 0 && (
+        {previews.length === 0 && (
           <p className="rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
             No accounts found. Run{" "}
             <code className="font-mono">npm run db:migrate && npm run db:seed</code>.
