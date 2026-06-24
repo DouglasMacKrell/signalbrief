@@ -6,6 +6,7 @@ test.describe("Account dashboard", () => {
 
     await expect(page.getByRole("heading", { name: "Northstar Logistics" })).toBeVisible();
     await expect(page.getByText("Risk signals")).toBeVisible();
+    await expect(page.getByText("negative", { exact: true })).toBeVisible();
     await expect(
       page.getByText("High-priority support issue remains unresolved"),
     ).toBeVisible();
@@ -16,6 +17,7 @@ test.describe("Account dashboard", () => {
     await page.goto("/accounts/acme-creative");
 
     await expect(page.getByRole("heading", { name: "Acme Creative" })).toBeVisible();
+    await expect(page.getByText("positive", { exact: true })).toBeVisible();
     await expect(page.getByText("Product health")).toBeVisible();
     await expect(page.getByText("82")).toBeVisible();
   });

@@ -8,6 +8,7 @@ import {
   EvidenceToggle,
   EvidenceVisibilityProvider,
 } from "@/components/evidence-visibility";
+import { SentimentBadge } from "@/components/sentiment-badge";
 import { RiskCard } from "@/components/risk-card";
 import { getAccountContext, getAccounts } from "@/src/domain/account-context";
 import { getBriefingProviderLabel, isLlmBriefingConfigured } from "@/src/domain/briefing-provider";
@@ -127,9 +128,12 @@ export default async function AccountDashboardPage({
             <div className="space-y-4">
               {calls.map((call) => (
                 <article key={call.id} className="border-b border-slate-100 pb-4 last:border-0 dark:border-slate-800">
-                  <p className="text-xs text-slate-500">
-                    {call.occurredAt.toLocaleDateString()} · {call.owner}
-                  </p>
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <p className="text-xs text-slate-500">
+                      {call.occurredAt.toLocaleDateString()} · {call.owner}
+                    </p>
+                    <SentimentBadge sentiment={call.sentiment} />
+                  </div>
                   <p className="mt-1 font-medium">{call.summary}</p>
                   <p className="mt-2 text-xs text-slate-600 dark:text-slate-400">
                     Themes: {call.themes.join(", ")}
