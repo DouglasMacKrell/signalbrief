@@ -5,6 +5,7 @@ import { desc, eq } from "drizzle-orm";
 import { getDb } from "@/src/db/client";
 import { briefingRuns } from "@/src/db/schema";
 import { getAccountContext } from "@/src/domain/account-context";
+import { toBriefingRunSummary } from "@/src/domain/briefing-run-summary";
 import { validateEvidenceIds } from "@/src/domain/evidence";
 import { BriefingSchema, type Briefing } from "@/src/domain/briefing-schema";
 import { getBriefingProvider } from "@/src/domain/briefing-provider";
@@ -113,10 +114,15 @@ export async function generateBriefing(accountId: string) {
 }
 
 export async function getBriefingHistory(accountId: string) {
+  const context = await getAccountContext(accountId);
+  if (!context) return null;
+
   const db = getDb();
-  return db
+  const rows = await db
     .select()
     .from(briefingRuns)
     .where(eq(briefingRuns.accountId, accountId))
     .orderBy(desc(briefingRuns.createdAt));
+
+  return rows.map(toBriefingRunSummary);
 }

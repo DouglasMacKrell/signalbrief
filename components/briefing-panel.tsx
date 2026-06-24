@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+import { BriefingHistoryPanel } from "@/components/briefing-history-panel";
 import { BriefingProgressBar } from "@/components/briefing-progress";
 import { BriefingRunMeta } from "@/components/briefing-run-meta";
 import { EvidenceChipList } from "@/components/evidence-chip-list";
@@ -26,6 +27,7 @@ export function BriefingPanel({
   const [loading, setLoading] = useState(false);
   const [progressComplete, setProgressComplete] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [historyRefreshToken, setHistoryRefreshToken] = useState(0);
 
   async function generate() {
     setLoading(true);
@@ -47,6 +49,7 @@ export function BriefingPanel({
       setProvider(data.provider);
       setBriefingRunId(data.briefingRunId);
       setLatencyMs(data.latencyMs ?? null);
+      setHistoryRefreshToken((token) => token + 1);
       if (llmBriefing) {
         setProgressComplete(true);
         await new Promise((resolve) => setTimeout(resolve, 350));
@@ -189,6 +192,11 @@ export function BriefingPanel({
           />
         </div>
       )}
+
+      <BriefingHistoryPanel
+        accountId={accountId}
+        refreshToken={historyRefreshToken}
+      />
     </section>
   );
 }

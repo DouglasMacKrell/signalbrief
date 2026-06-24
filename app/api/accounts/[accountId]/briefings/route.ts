@@ -1,8 +1,22 @@
 import { NextResponse } from "next/server";
 
-import { generateBriefing } from "@/src/domain/briefing-service";
+import { generateBriefing, getBriefingHistory } from "@/src/domain/briefing-service";
 
 export const dynamic = "force-dynamic";
+
+export async function GET(
+  _request: Request,
+  { params }: { params: Promise<{ accountId: string }> },
+) {
+  const { accountId } = await params;
+  const runs = await getBriefingHistory(accountId);
+
+  if (!runs) {
+    return NextResponse.json({ error: "Account not found" }, { status: 404 });
+  }
+
+  return NextResponse.json({ runs });
+}
 
 export async function POST(
   _request: Request,

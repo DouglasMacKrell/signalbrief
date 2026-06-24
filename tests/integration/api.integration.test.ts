@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { GET as getAccounts } from "@/app/api/accounts/route";
 import { GET as getContext } from "@/app/api/accounts/[accountId]/context/route";
 import { GET as getRisks } from "@/app/api/accounts/[accountId]/risks/route";
-import { POST as postBriefing } from "@/app/api/accounts/[accountId]/briefings/route";
+import { GET as getBriefings, POST as postBriefing } from "@/app/api/accounts/[accountId]/briefings/route";
 import { POST as postFeedback } from "@/app/api/feedback/route";
 
 describe("API routes (integration)", () => {
@@ -49,6 +49,23 @@ describe("API routes (integration)", () => {
     expect(data.provider).toBe("rules-fallback");
     expect(data.briefingRunId).toBeTruthy();
     expect(data.latencyMs).toBeGreaterThanOrEqual(0);
+  });
+
+  it("GET /api/accounts/:id/briefings returns briefing run history", async () => {
+    const postRes = await postBriefing(new Request("http://test", { method: "POST" }), {
+      params: Promise.resolve({ accountId: "harbor-foods" }),
+    });
+    const postData = await postRes.json();
+
+    const getRes = await getBriefings(new Request("http://test"), {
+      params: Promise.resolve({ accountId: "harbor-foods" }),
+    });
+    const getData = await getRes.json();
+
+    expect(getRes.status).toBe(200);
+    expect(getData.runs.length).toBeGreaterThan(0);
+    expect(getData.runs[0]?.id).toBe(postData.briefingRunId);
+    expect(getData.runs[0]?.status).toBe("success");
   });
 
   it("POST /api/feedback accepts sentiment", async () => {
