@@ -56,13 +56,14 @@ export function AccountPreviewCard({ preview }: { preview: AccountPreview }) {
       </div>
 
       <span
+        title={preview.storyHint}
         className={`mt-3 inline-flex w-fit rounded-full border px-2.5 py-0.5 text-xs font-medium ${riskLevelStyles[preview.riskLevel]}`}
       >
         {preview.storyLabel}
       </span>
 
       <dl className="mt-4 grid flex-1 grid-cols-2 gap-4 border-t border-slate-100 pt-4 text-sm dark:border-slate-800">
-        <div>
+        <div title="Latest product health score from product analytics">
           <dt className="text-xs uppercase tracking-wide text-slate-500">
             Health
           </dt>
@@ -70,7 +71,13 @@ export function AccountPreviewCard({ preview }: { preview: AccountPreview }) {
             {preview.healthScore}
           </dd>
         </div>
-        <div>
+        <div
+          title={
+            preview.riskCount === 0
+              ? "No deterministic risk rules fired for this account"
+              : `${preview.riskCount} risk signal(s) from deterministic rules — open account for Why this fired`
+          }
+        >
           <dt className="text-xs uppercase tracking-wide text-slate-500">
             Risks
           </dt>

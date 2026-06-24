@@ -19,9 +19,7 @@ export function RiskCard({ risk }: { risk: RiskSignal }) {
   return (
     <div className={`rounded-lg border p-4 ${severityStyles[risk.severity]}`}>
       <div className="flex items-center justify-between gap-2">
-        <h3 className="font-semibold" title={ruleDescription}>
-          {risk.label}
-        </h3>
+        <h3 className="font-semibold">{risk.label}</h3>
         <span className="text-xs uppercase tracking-wide">{risk.severity}</span>
       </div>
       <p className="mt-1 text-xs font-medium opacity-80">

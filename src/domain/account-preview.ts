@@ -9,24 +9,39 @@ export type AccountPreview = AccountSummary & {
   riskCount: number;
   highestSeverity: RiskSignal["severity"] | null;
   storyLabel: string;
+  storyHint: string;
   riskLevel: DemoRiskLevel;
 };
 
 export const DEMO_ACCOUNT_STORIES: Record<
   string,
-  { storyLabel: string; riskLevel: DemoRiskLevel }
+  { storyLabel: string; riskLevel: DemoRiskLevel; hint: string }
 > = {
-  "acme-creative": { storyLabel: "Healthy expansion", riskLevel: "low" },
+  "acme-creative": {
+    storyLabel: "Healthy expansion",
+    riskLevel: "low",
+    hint: "Expansion-ready; positive calls, usage trending up",
+  },
   "northstar-logistics": {
     storyLabel: "High-risk renewal",
     riskLevel: "high",
+    hint: "Renewal at risk; open high-priority ticket, negative calls",
   },
   "brightline-health": {
     storyLabel: "Mixed renewal signals",
     riskLevel: "medium",
+    hint: "Renewal in 40 days with onboarding friction on calls",
   },
-  "summit-legal": { storyLabel: "Enterprise stable renewal", riskLevel: "low" },
-  "harbor-foods": { storyLabel: "Stalled discovery", riskLevel: "medium" },
+  "summit-legal": {
+    storyLabel: "Enterprise stable renewal",
+    riskLevel: "low",
+    hint: "Stable $120k renewal; positive compliance themes",
+  },
+  "harbor-foods": {
+    storyLabel: "Stalled discovery",
+    riskLevel: "medium",
+    hint: "Long time in discovery; quiet outreach and stale Gong data",
+  },
 };
 
 const SEVERITY_RANK: Record<RiskSignal["severity"], number> = {
@@ -70,6 +85,9 @@ export async function getAccountPreviews(): Promise<AccountPreview[]> {
         riskCount: count,
         highestSeverity,
         storyLabel: story?.storyLabel ?? account.segment,
+        storyHint:
+          story?.hint ??
+          "Open the account dashboard for CRM, calls, tickets, and health",
         riskLevel: story?.riskLevel ?? "medium",
       };
     }),
