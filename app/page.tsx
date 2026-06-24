@@ -1,4 +1,5 @@
 import { AccountPreviewCard } from "@/components/account-preview-card";
+import { AgentLayerCallout } from "@/components/agent-layer-callout";
 import { getAccountPreviews } from "@/src/domain/account-preview";
 
 export const dynamic = "force-dynamic";
@@ -39,6 +40,8 @@ export default async function HomePage() {
             <code className="font-mono">npm run db:migrate && npm run db:seed</code>.
           </p>
         )}
+
+        <AgentLayerCallout />
       </main>
     </div>
   );

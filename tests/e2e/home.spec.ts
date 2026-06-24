@@ -9,5 +9,6 @@ test.describe("SignalBrief home", () => {
     await expect(page.getByRole("link", { name: /Northstar Logistics/ })).toBeVisible();
     await expect(page.getByText("High-risk renewal")).toBeVisible();
     await expect(page.getByText("Healthy expansion")).toBeVisible();
+    await expect(page.getByText("Agent layer — MCP & REST")).toBeVisible();
   });
 });
