@@ -65,6 +65,26 @@ SignalBrief is a prototype of how I would approach that role—**internal GTM pr
 
 Runs **rules-fallback** briefings on Render (no Ollama). Free tier may cold-start after ~15 min idle — open the link before a screen share.
 
+## Product tour
+
+Screenshots from the [live demo](https://signalbrief-web.onrender.com). Step-by-step captions: **[docs/explorer-guide.md](docs/explorer-guide.md)**.
+
+**Home — story badges, health scores, and risk counts**
+
+![SignalBrief home screen with five demo account preview cards](docs/images/home-account-previews.png)
+
+**Northstar Logistics — unified context and deterministic risks (evidence on)**
+
+![Northstar Logistics account dashboard with risk signals and source evidence chips](docs/images/northstar-risks-evidence.png)
+
+**Structured briefing — next action, feedback, and audit history**
+
+![Generated account briefing with risks, talking points, and past briefing runs](docs/images/northstar-briefing.png)
+
+**Acme Creative — healthy expansion contrast**
+
+![Acme Creative account dashboard with positive call sentiment and no risk signals](docs/images/acme-healthy-dashboard.png)
+
 ## For reviewers (hiring manager / async)
 
 **No screen share?** Start here: **[docs/explorer-guide.md](docs/explorer-guide.md)** — 10-minute self-guided tour of the live app, trust boundaries, and where to read about architecture, security, and MCP.

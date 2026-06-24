@@ -90,6 +90,8 @@ npm run dev                   # → http://localhost:3001
 
 Panel shows **AI briefing** and provider `ollama (qwen3:14b)`. First generation can take 30–90s.
 
+![Acme Creative briefing panel configured for local Ollama inference](docs/images/local-ollama-briefing-panel.png)
+
 **Screen-share flow:** Open Render URL for “production” data story → switch to **localhost:3001** for “here’s the same app with local Ollama inference.”
 
 ## Local Ollama config

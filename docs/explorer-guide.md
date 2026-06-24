@@ -29,6 +29,8 @@ It is **not** a chatbot bolted onto Salesforce. Risks are computed in code first
 
 Open the [live demo](https://signalbrief-web.onrender.com).
 
+![SignalBrief home screen with account preview cards](docs/images/home-account-previews.png)
+
 Each account card shows:
 
 - **Story badge** (e.g. “High-risk renewal”, “Healthy expansion”)
@@ -38,9 +40,13 @@ Each account card shows:
 
 Scroll down and expand **Agent layer — MCP & REST** to see how the same domain layer exposes read-only MCP tools and REST routes (composability without CRM write-back).
 
+![Agent layer panel listing read-only MCP tools and REST API routes](docs/images/agent-layer-mcp-rest.png)
+
 ### 2. Northstar Logistics — risk path (3 min)
 
 Click **Northstar Logistics**.
+
+![Northstar Logistics dashboard — CRM, calls, support, and risk signals](docs/images/northstar-dashboard.png)
 
 | Area | What to notice |
 |---|---|
@@ -48,9 +54,14 @@ Click **Northstar Logistics**.
 | **Recent calls** | **Sentiment badge** (negative) on the renewal call |
 | **Support tickets** | **Open** vs **Resolved** sections — open high-priority ticket drives risk |
 | **Risk signals** | Each card: **Why this fired** (deterministic rule) + explanation + evidence chips when toggled on |
+
+![Northstar risk signals with evidence citations visible](docs/images/northstar-risks-evidence.png)
+
 | **Structured briefing** | Click **Generate Briefing** → summary, risks, positive signals, next action |
 | **After generation** | **Run ID · latency · provider** footer; expand **Past briefing runs** for audit trail |
 | **Feedback** | Helpful / not helpful; **Draft follow-up task** (logs intent, no CRM write-back) |
+
+![Generated briefing with next action, feedback controls, and past briefing runs](docs/images/northstar-briefing.png)
 
 ### 3. Acme Creative — contrast (2 min)
 
@@ -60,6 +71,8 @@ Switch to **Acme Creative** via the account dropdown.
 - **No open support tickets** (resolved history may still appear below)
 - **Positive** call sentiment
 - Generate briefing → note **positive signals** and low-risk narrative
+
+![Acme Creative healthy account with positive call sentiment and generated briefing](docs/images/acme-healthy-dashboard.png)
 
 ### 4. Trust & telemetry (1 min, optional)
 
@@ -72,6 +85,8 @@ https://signalbrief-web.onrender.com/accounts/northstar-logistics?debug=1
 Scroll to the footer → **Trust & telemetry (debug)** → **Show recent events**.
 
 Structured server events (`account_viewed`, `briefing_generated`, `feedback_submitted`, etc.) are logged for audit—not exposed in production without `?debug=1`.
+
+![Past briefing runs audit trail and Trust and telemetry debug event log](docs/images/trust-telemetry-debug.png)
 
 ### 5. Engineering depth (remaining time)
 
