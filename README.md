@@ -2,6 +2,8 @@
 
 **Evidence-backed account intelligence for revenue teams.**
 
+*Portfolio showcase by **[Douglas MacKrell](https://www.linkedin.com/in/douglasmackrell)** — exploring how a GTM engineer unifies revenue data, surfaces explainable risk, and ships bounded AI workflows sellers can trust.*
+
 SignalBrief is an internal GTM application prototype that unifies account context from CRM, call, support, and product-health sources into a single dashboard—with deterministic risk signals and structured account briefings backed by evidence.
 
 > Seed scripts simulate upstream source-system ingestion. In production, these would be replaced by idempotent connectors, source metadata, freshness monitoring, backfills, and canonical warehouse models.
@@ -68,6 +70,8 @@ Runs **rules-fallback** briefings on Render (no Ollama). Free tier may cold-star
 **No screen share?** Start here: **[docs/explorer-guide.md](docs/explorer-guide.md)** — 10-minute self-guided tour of the live app, trust boundaries, and where to read about architecture, security, and MCP.
 
 **Quick path:** Home → **Northstar Logistics** → **Show evidence** → **Generate Briefing** → expand **Past briefing runs**. Add `?debug=1` on any account URL for the telemetry footer.
+
+**Questions or want a walkthrough?** See [Author & outreach](#author--outreach) at the bottom of this README.
 
 ## What it demonstrates
 
@@ -203,6 +207,30 @@ Details: [docs/security.md](docs/security.md)
 - **Simplicity** over enterprise patterns — see `.cursor/rules/simplicity.mdc`
 - **Pre-commit hooks** run secret/PII scan + tests on every commit
 - **Commit often**, push with care — see `.cursor/rules/git-push-safety.mdc`
+
+## Author & outreach
+
+**Douglas MacKrell** built SignalBrief as a hands-on portfolio piece for **GTM engineering** and internal revenue-tooling roles—connecting fragmented seller data, deterministic signals, and production-safe AI assist.
+
+### Review pipeline
+
+| Step | Where to go |
+|---|---|
+| **1. See it work** | [Live demo](https://signalbrief-web.onrender.com) — start on home, open **Northstar Logistics** |
+| **2. Self-guided tour** | [docs/explorer-guide.md](docs/explorer-guide.md) — 10 min, no screen share required |
+| **3. Understand the why** | Problem & Solution sections above · [demo-guide.md](docs/demo-guide.md) |
+| **4. Go deeper technically** | [architecture.md](docs/architecture.md) · [security.md](docs/security.md) · source on GitHub |
+| **5. Connect** | Email or LinkedIn below — happy to walk through live or discuss how this maps to your stack |
+
+### Contact
+
+| | |
+|---|---|
+| **Email** | [d.mackrell@gmail.com](mailto:d.mackrell@gmail.com) |
+| **LinkedIn** | [linkedin.com/in/douglasmackrell](https://www.linkedin.com/in/douglasmackrell) |
+| **GitHub** | [github.com/DouglasMacKrell](https://github.com/DouglasMacKrell) (repo may be private — request access or use the live URL) |
+
+> **For hiring managers:** If you only have a few minutes, hit the [live demo](https://signalbrief-web.onrender.com/accounts/northstar-logistics?debug=1) → **Show evidence** → **Generate Briefing** → expand **Past briefing runs** and the **Trust & telemetry** footer.
 
 ## License
 

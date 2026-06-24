@@ -5,7 +5,8 @@
 | | |
 |---|---|
 | **Live app** | [signalbrief-web.onrender.com](https://signalbrief-web.onrender.com) |
-| **Repo** | Private GitHub — request access or use this doc with the live URL |
+| **Repo** | [github.com/DouglasMacKrell/signalbrief](https://github.com/DouglasMacKrell/signalbrief) (request access if private) |
+| **Author** | [Douglas MacKrell](https://www.linkedin.com/in/douglasmackrell) |
 | **Time needed** | 5–15 minutes |
 
 > **Cold start:** Render free tier may take 30–60s on first load after idle. Refresh once if the page is slow.
@@ -140,3 +141,17 @@ Full steps: [QUICKSTART.md](./QUICKSTART.md).
 3. How do you separate **deterministic business rules** from **LLM narrative**?
 4. How would internal agents consume the same data without CRM write access?
 5. How do you deploy a credible demo without paying for hosted LLM inference?
+
+---
+
+## Connect with the author
+
+**Douglas MacKrell** built this as a portfolio showcase for GTM engineering and internal revenue tooling.
+
+| Channel | Link |
+|---|---|
+| **Email** | [d.mackrell@gmail.com](mailto:d.mackrell@gmail.com) |
+| **LinkedIn** | [linkedin.com/in/douglasmackrell](https://www.linkedin.com/in/douglasmackrell) |
+| **GitHub** | [github.com/DouglasMacKrell](https://github.com/DouglasMacKrell) |
+
+If you want a live walkthrough or to discuss how this maps to your team’s stack, reach out via email or LinkedIn — a short note referencing SignalBrief is enough.
