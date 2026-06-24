@@ -1,6 +1,6 @@
 # SignalBrief
 
-**Evidence-backed account intelligence for revenue teams.**
+![SignalBrief — evidence-backed account intelligence for revenue teams](docs/images/signalbrief-hero.png)
 
 *Portfolio showcase by **[Douglas MacKrell](https://www.linkedin.com/in/douglasmackrell)** — exploring how a GTM engineer unifies revenue data, surfaces explainable risk, and ships bounded AI workflows sellers can trust.*
 
