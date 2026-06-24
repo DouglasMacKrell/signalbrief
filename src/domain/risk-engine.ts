@@ -16,6 +16,24 @@ const NEGATIVE_THEMES = [
   "churn",
 ];
 
+export const RISK_RULE_DESCRIPTIONS: Record<string, string> = {
+  "risk-no-activity": "No CRM activity in 21+ days",
+  "risk-stalled-opportunity": "Opportunity in the same stage for 30+ days",
+  "risk-usage-decline": "Usage trending down within 45 days of close",
+  "risk-negative-call":
+    "Negative sentiment or friction themes in calls from the last 30 days",
+  "risk-low-health-renewal":
+    "Health score below 50 during an active renewal stage",
+};
+
+const OPEN_TICKET_RULE =
+  "High- or urgent-priority ticket open for more than 7 days";
+
+export function getRiskRuleDescription(riskId: string): string {
+  if (riskId.startsWith("risk-ticket-")) return OPEN_TICKET_RULE;
+  return RISK_RULE_DESCRIPTIONS[riskId] ?? "Deterministic risk rule";
+}
+
 function daysSince(date: Date, now: Date): number {
   return differenceInDays(now, date);
 }

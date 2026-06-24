@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import { BriefingSchema } from "@/src/domain/briefing-schema";
 import { validateEvidenceIds } from "@/src/domain/evidence";
-import { calculateRiskSignals } from "@/src/domain/risk-engine";
+import { calculateRiskSignals, getRiskRuleDescription } from "@/src/domain/risk-engine";
 import { rulesFallbackProvider } from "@/src/providers/rules-fallback-provider";
 import {
   buildContext,
@@ -133,6 +133,20 @@ describe("rulesFallbackProvider", () => {
     expect(BriefingSchema.safeParse(briefing).success).toBe(true);
     expect(validateEvidenceIds(briefing.nextBestAction.evidenceIds, context)).toBe(
       true,
+    );
+  });
+});
+
+describe("getRiskRuleDescription", () => {
+  it("maps known rule ids to deterministic explanations", () => {
+    expect(getRiskRuleDescription("risk-no-activity")).toContain("21+ days");
+    expect(getRiskRuleDescription("risk-stalled-opportunity")).toContain("30+ days");
+    expect(getRiskRuleDescription("risk-low-health-renewal")).toContain("below 50");
+  });
+
+  it("handles ticket-specific risk ids", () => {
+    expect(getRiskRuleDescription("risk-ticket-northstar-open")).toContain(
+      "7 days",
     );
   });
 });

@@ -12,6 +12,9 @@ test.describe("Account dashboard", () => {
     await expect(
       page.getByText("High-priority support issue remains unresolved"),
     ).toBeVisible();
+    await expect(
+      page.getByText("Why this fired: High- or urgent-priority ticket open for more than 7 days"),
+    ).toBeVisible();
     await expect(page.getByText("Opportunity may be stalled")).toBeVisible();
   });
 
