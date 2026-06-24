@@ -77,16 +77,33 @@ Runs **rules-fallback** briefings on Render (no Ollama). Free tier may cold-star
 - Structured briefing generation with Zod validation and audit logs
 - Human-in-the-loop feedback—no autonomous write-back to source systems
 
-## Stack
+## Tech stack
 
-| Layer | Choice |
-|---|---|
-| App | Next.js, TypeScript, Tailwind CSS |
-| Database | PostgreSQL |
-| ORM | Drizzle |
-| Validation | Zod |
-| Tests | Vitest |
-| Deploy | Render (web + Postgres) |
+| Layer | Technology | Role in SignalBrief |
+|---|---|---|
+| **App framework** | Next.js 16 (App Router) | Server components, API routes, dashboard UI |
+| **Language** | TypeScript 5 | End-to-end typing across UI, domain, and API |
+| **UI** | React 19, Tailwind CSS 4 | Account dashboard, briefing panel, home previews |
+| **Database** | PostgreSQL 16 | Accounts, opportunities, calls, tickets, health, audit tables |
+| **ORM / migrations** | Drizzle ORM, drizzle-kit | Schema, queries, SQL migrations |
+| **Validation** | Zod 4 | Briefing JSON schema, API request bodies |
+| **Dates** | date-fns | Freshness, risk windows, relative timestamps |
+| **LLM (local optional)** | Ollama (`qwen3:14b` default) | Server-side structured briefings on `127.0.0.1` only |
+| **LLM (production)** | Rules-fallback provider | Deterministic briefings—no hosted inference cost |
+| **Agent layer** | MCP SDK (stdio) | Read-only tools over shared domain services |
+| **Unit / integration tests** | Vitest 4 | Domain logic, providers, API routes (with real Postgres) |
+| **E2E tests** | Playwright | Browser flows against production build |
+| **Coverage** | Vitest + v8 | Domain and provider coverage reporting |
+| **Lint** | ESLint 9 (eslint-config-next) | Static analysis |
+| **Local data** | Docker Compose | Postgres for development and integration tests |
+| **CI** | GitHub Actions | Tests on push/PR to `main` and `develop` |
+| **Pre-commit** | Husky | Secret/PII scan + test suite on every commit |
+| **Deploy** | Render | Web service + managed Postgres (`render.yaml`) |
+| **Runtime scripts** | tsx, dotenv | Migrations, seed, MCP server, Ollama health check |
+
+**Intentionally not in scope:** microservices, vector DB, hosted LLM APIs, CRM write-back connectors, or auth (prototype/demo boundaries).
+
+Details: [docs/architecture.md](docs/architecture.md) · [docs/deployment.md](docs/deployment.md)
 
 ## Quick start
 
