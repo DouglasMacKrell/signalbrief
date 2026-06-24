@@ -22,5 +22,6 @@ export async function POST(
     briefing: result.briefing,
     briefingRunId: result.briefingRunId,
     provider: result.provider,
+    latencyMs: result.latencyMs,
   });
 }

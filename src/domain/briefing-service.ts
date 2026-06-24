@@ -80,6 +80,7 @@ export async function generateBriefing(accountId: string) {
       briefing,
       briefingRunId: runId,
       provider: provider.name,
+      latencyMs,
       status: 200,
     };
   } catch (err) {

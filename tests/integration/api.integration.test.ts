@@ -47,6 +47,8 @@ describe("API routes (integration)", () => {
     expect(res.status).toBe(200);
     expect(data.briefing.summary).toBeTruthy();
     expect(data.provider).toBe("rules-fallback");
+    expect(data.briefingRunId).toBeTruthy();
+    expect(data.latencyMs).toBeGreaterThanOrEqual(0);
   });
 
   it("POST /api/feedback accepts sentiment", async () => {

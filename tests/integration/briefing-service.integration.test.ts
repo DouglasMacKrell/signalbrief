@@ -14,6 +14,7 @@ describe("generateBriefing (integration)", () => {
     if ("error" in result) throw new Error("expected success");
 
     expect(result.provider).toBe("rules-fallback");
+    expect(result.latencyMs).toBeGreaterThanOrEqual(0);
     expect(BriefingSchema.safeParse(result.briefing).success).toBe(true);
 
     const db = getDb();

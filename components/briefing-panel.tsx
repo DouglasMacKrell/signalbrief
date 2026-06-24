@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { BriefingProgressBar } from "@/components/briefing-progress";
+import { BriefingRunMeta } from "@/components/briefing-run-meta";
 import { EvidenceChipList } from "@/components/evidence-chip-list";
 import type { Briefing } from "@/src/domain/briefing-schema";
 import type { EvidenceRef } from "@/src/domain/types";
@@ -21,6 +22,7 @@ export function BriefingPanel({
   const [briefing, setBriefing] = useState<Briefing | null>(null);
   const [provider, setProvider] = useState<string | null>(null);
   const [briefingRunId, setBriefingRunId] = useState<string | null>(null);
+  const [latencyMs, setLatencyMs] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [progressComplete, setProgressComplete] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,6 +46,7 @@ export function BriefingPanel({
       setBriefing(data.briefing);
       setProvider(data.provider);
       setBriefingRunId(data.briefingRunId);
+      setLatencyMs(data.latencyMs ?? null);
       if (llmBriefing) {
         setProgressComplete(true);
         await new Promise((resolve) => setTimeout(resolve, 350));
@@ -166,6 +169,18 @@ export function BriefingPanel({
               ))}
             </ul>
           </div>
+
+          {briefingRunId && latencyMs !== null && (
+            <BriefingRunMeta
+              runId={briefingRunId}
+              latencyMs={latencyMs}
+              providerLabel={
+                provider === "ollama" && configuredProvider.startsWith("ollama")
+                  ? configuredProvider
+                  : (provider ?? configuredProvider)
+              }
+            />
+          )}
 
           <FeedbackForm
             accountId={accountId}
